@@ -1,0 +1,6 @@
+{
+  "name": "Japanese JLPT N5 Vocabulary Flashcards",
+  "description": "Comprehensive JLPT N5 vocabulary study companion with 800+ terms, Bengali translations, interactive flipcards, furigana, downloadable PDF vocabulary book, example sentences, and audio pronunciation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
