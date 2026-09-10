@@ -62,31 +62,28 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
       }
 
       // 2. Status Filter
-      if (filterType === 'bookmarked' && !bookmarkedIds.has(item.id)) {
-        return false;
-      }
-      if (filterType === 'mastered' && !masteredIds.has(item.id)) {
-        return false;
-      }
-      if (filterType === 'unlearned' && masteredIds.has(item.id)) {
-        return false;
-      }
+      if (filterType === 'mastered' && !masteredIds.has(item.id)) return false;
+      if (filterType === 'unlearned' && masteredIds.has(item.id)) return false;
+      if (filterType === 'bookmarked' && !bookmarkedIds.has(item.id)) return false;
 
-      // 3. Search Query (matches bn, kanji, hiragana, romaji, category)
+      // 3. Search query
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase().trim();
-        const matchesKanji = item.kanji.toLowerCase().includes(query);
-        const matchesHiragana = item.hiragana.toLowerCase().includes(query);
-        const matchesRomaji = item.romaji.toLowerCase().includes(query);
-        const matchesBn = item.bn.toLowerCase().includes(query);
-        const matchesCat = item.category.toLowerCase().includes(query);
-        const matchesExampleBn = item.exampleBn?.toLowerCase().includes(query);
-        return matchesKanji || matchesHiragana || matchesRomaji || matchesBn || matchesCat || matchesExampleBn;
+        const matchKanji = item.kanji.toLowerCase().includes(query);
+        const matchHiragana = item.hiragana.toLowerCase().includes(query);
+        const matchRomaji = item.romaji.toLowerCase().includes(query);
+        const matchBn = item.bn.toLowerCase().includes(query);
+        const matchCat = item.category.toLowerCase().includes(query);
+        return matchKanji || matchHiragana || matchRomaji || matchBn || matchCat;
       }
 
       return true;
     });
-  }, [allVocab, selectedCategory, filterType, searchQuery, bookmarkedIds, masteredIds]);
+  }, [allVocab, selectedCategory, filterType, searchQuery, masteredIds, bookmarkedIds]);
+
+  const toggleRowExpand = (id: number) => {
+    setExpandedRowId((prev) => (prev === id ? null : id));
+  };
 
   const handleResetFilters = () => {
     setSearchQuery('');
@@ -94,32 +91,28 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
     setFilterType('all');
   };
 
-  const toggleRowExpand = (id: number) => {
-    setExpandedRowId((prev) => (prev === id ? null : id));
-  };
-
   return (
-    <div id="vocab-list-view" className="max-w-6xl mx-auto px-4 py-6">
+    <div id="vocab-list-view" className="max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
       
       {/* Search & Filter Header */}
-      <div className="bg-slate-900/80 backdrop-blur-xl p-4 sm:p-5 rounded-2xl border border-slate-800 shadow-xl shadow-black/20 mb-6 space-y-4">
+      <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#e8e2d4] shadow-xs mb-6 space-y-4">
         
         <div className="flex flex-col sm:flex-row gap-3">
           {/* Search Input Bar */}
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-cyan-400" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               id="vocab-search-input"
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="শব্দ খুঁজুন (বাংলা, Kanji, Hiragana বা Romaji যেমন: পাহাড়, yama, 山)..."
-              className="w-full pl-10 pr-10 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 font-bengali"
+              placeholder="শব্দ খুঁজুন (যেমন: পাহাড়, yama, 山, taberu, খাওয়া)..."
+              className="w-full pl-10 pr-10 py-2.5 bg-[#faf8f5] border border-[#e2dcd0] rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#558b2f] focus:ring-1 focus:ring-[#558b2f] font-bengali transition"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -132,7 +125,7 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
               id="list-category-filter"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-200 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 font-bengali cursor-pointer"
+              className="w-full bg-[#faf8f5] border border-[#e2dcd0] rounded-xl px-3 py-2.5 text-sm font-medium text-slate-800 focus:outline-none focus:border-[#558b2f] focus:ring-1 focus:ring-[#558b2f] font-bengali cursor-pointer transition"
             >
               <option value="all">সব বিষয়ভিত্তিক বিভাগ ({allVocab.length})</option>
               {CATEGORIES.filter(c => c.key !== 'all').map((cat) => {
@@ -150,7 +143,7 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
           {onOpenVoiceSettings && (
             <button
               onClick={onOpenVoiceSettings}
-              className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-950 text-cyan-400 border border-slate-800 hover:border-cyan-500/40 hover:text-cyan-300 transition text-xs font-semibold"
+              className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#faf8f5] text-[#558b2f] border border-[#e2dcd0] hover:bg-[#f0f7e6] transition text-xs font-semibold"
               title="ভয়েস ও উচ্চারণ সেটিংস"
             >
               <Sliders className="w-4 h-4" />
@@ -160,48 +153,48 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
         </div>
 
         {/* Status Filter Chips */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-slate-800/80 text-xs font-medium">
-          <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#e8e2d4] text-xs font-medium">
+          <div className="flex flex-wrap items-center gap-2 font-bengali">
             <button
               onClick={() => setFilterType('all')}
-              className={`px-3.5 py-1.5 rounded-xl border transition ${
+              className={`px-3.5 py-1.5 rounded-full border transition ${
                 filterType === 'all'
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-blue-400/30 shadow-md shadow-blue-600/20'
-                  : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-200'
+                  ? 'bg-[#1e293b] text-white border-[#1e293b] shadow-2xs font-bold'
+                  : 'bg-white text-slate-700 border-[#e2dcd0] hover:bg-[#faf7f0]'
               }`}
             >
               সব শব্দ ({allVocab.length})
             </button>
             <button
               onClick={() => setFilterType('unlearned')}
-              className={`px-3.5 py-1.5 rounded-xl border transition ${
+              className={`px-3.5 py-1.5 rounded-full border transition ${
                 filterType === 'unlearned'
-                  ? 'bg-blue-600 text-white border-blue-400/30 shadow-md shadow-blue-600/20'
-                  : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-200'
+                  ? 'bg-[#558b2f] text-white border-[#558b2f] shadow-2xs font-bold'
+                  : 'bg-white text-slate-700 border-[#e2dcd0] hover:bg-[#faf7f0]'
               }`}
             >
               শেখা বাকি ({allVocab.length - masteredIds.size})
             </button>
             <button
               onClick={() => setFilterType('mastered')}
-              className={`px-3.5 py-1.5 rounded-xl border transition flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full border transition flex items-center gap-1.5 ${
                 filterType === 'mastered'
-                  ? 'bg-emerald-600 text-white border-emerald-400/30 shadow-md shadow-emerald-600/20'
-                  : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-200'
+                  ? 'bg-[#558b2f] text-white border-[#558b2f] shadow-2xs font-bold'
+                  : 'bg-white text-slate-700 border-[#e2dcd0] hover:bg-[#faf7f0]'
               }`}
             >
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              <CheckCircle2 className="w-3.5 h-3.5" />
               <span>শেখা হয়েছে ({masteredIds.size})</span>
             </button>
             <button
               onClick={() => setFilterType('bookmarked')}
-              className={`px-3.5 py-1.5 rounded-xl border transition flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full border transition flex items-center gap-1.5 ${
                 filterType === 'bookmarked'
-                  ? 'bg-amber-500 text-slate-950 font-bold border-amber-400/30 shadow-md shadow-amber-500/20'
-                  : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-200'
+                  ? 'bg-[#f6c445] text-[#78350f] font-bold border-[#eab308] shadow-2xs'
+                  : 'bg-white text-slate-700 border-[#e2dcd0] hover:bg-[#faf7f0]'
               }`}
             >
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+              <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
               <span>সংরক্ষিত ({bookmarkedIds.size})</span>
             </button>
           </div>
@@ -210,15 +203,15 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
             {onNavigateToBook && (
               <button
                 onClick={onNavigateToBook}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 hover:text-cyan-200 border border-slate-700/80 text-xs font-bengali transition cursor-pointer shadow-xs"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#f4f9ea] hover:bg-[#e9f4d7] text-[#558b2f] border border-[#d6eab9] text-xs font-bengali font-semibold transition cursor-pointer shadow-2xs"
                 title="সম্পূর্ণ শব্দকোষ PDF বই আকারে দেখুন ও ডাউনলোড করুন"
               >
-                <Download className="w-3.5 h-3.5 text-cyan-400" />
+                <Download className="w-3.5 h-3.5" />
                 <span>PDF বই ডাউনলোড</span>
               </button>
             )}
-            <div className="text-slate-400 text-xs font-bengali">
-              প্রদর্শিত হচ্ছে: <span className="font-bold text-cyan-400 font-mono">{filteredVocab.length}</span> টি শব্দ
+            <div className="text-slate-500 text-xs font-bengali">
+              প্রদর্শিত হচ্ছে: <span className="font-bold text-slate-900 font-mono">{filteredVocab.length}</span> টি শব্দ
             </div>
           </div>
         </div>
@@ -241,7 +234,7 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
           onResetFilters={handleResetFilters}
         />
       ) : (
-        <div className="bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-800 shadow-xl shadow-black/20 divide-y divide-slate-800/70 overflow-hidden">
+        <div className="bg-white rounded-2xl border border-[#e8e2d4] shadow-xs divide-y divide-[#f0eae0] overflow-hidden">
           {filteredVocab.map((item) => {
             const isBookmarked = bookmarkedIds.has(item.id);
             const isMastered = masteredIds.has(item.id);
@@ -251,11 +244,11 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
               <div 
                 key={item.id}
                 className={`transition-colors ${
-                  isExpanded ? 'bg-slate-950/60' : 'hover:bg-slate-850/50'
+                  isExpanded ? 'bg-[#faf8f5]' : 'hover:bg-[#faf8f5]/60'
                 }`}
               >
                 <div 
-                  className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer"
+                  className="p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer"
                   onClick={() => toggleRowExpand(item.id)}
                 >
                   
@@ -263,14 +256,14 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
                   <div className="flex items-start sm:items-center gap-3 sm:gap-4 flex-1">
                     
                     {/* Index Number */}
-                    <span className="text-xs font-mono text-slate-500 w-8 shrink-0 pt-1 sm:pt-0">
+                    <span className="text-xs font-mono text-slate-400 w-8 shrink-0 pt-1 sm:pt-0">
                       #{item.id}
                     </span>
 
                     {/* Kanji / Hiragana */}
                     <div className="min-w-[140px]">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-xl sm:text-2xl font-bold font-japanese text-white">
+                        <span className="text-xl sm:text-2xl font-bold font-japanese text-slate-900">
                           {item.kanji}
                         </span>
                         {/* Normal Audio */}
@@ -279,10 +272,10 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
                             e.stopPropagation();
                             speakJapanese(item.hiragana || item.kanji, { slow: false });
                           }}
-                          className="p-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 text-cyan-400 border border-slate-800 hover:border-cyan-500/40 transition"
+                          className="p-1 rounded-lg bg-[#f4f9ea] hover:bg-[#e9f4d7] text-[#558b2f] border border-[#d6eab9] transition"
                           title="স্বাভাবিক স্পষ্ট উচ্চারণ শুনুন"
                         >
-                          <Volume2 className="w-4 h-4" />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                         {/* Slow Audio */}
                         <button
@@ -290,13 +283,13 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
                             e.stopPropagation();
                             speakJapanese(item.hiragana || item.kanji, { slow: true });
                           }}
-                          className="p-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 text-amber-400 border border-slate-800 hover:border-amber-500/40 transition"
+                          className="p-1 rounded-lg bg-[#fef9ee] hover:bg-[#fef3d6] text-[#b45309] border border-[#fde68a] transition"
                           title="ধীর ও স্পষ্ট উচ্চারণ (0.65x)"
                         >
                           <Turtle className="w-3.5 h-3.5" />
                         </button>
                       </div>
-                      <div className="text-xs text-cyan-400 font-medium font-japanese">
+                      <div className="text-xs text-[#558b2f] font-semibold font-japanese">
                         {item.hiragana}
                         <span className="text-slate-400 font-mono ml-1.5 font-normal">
                           [{item.romaji}]
@@ -307,7 +300,7 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
                     {/* Bengali Translation & Bangla Audio */}
                     <div className="flex-1">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <p className="text-base sm:text-lg font-bold font-bengali text-slate-100">
+                        <p className="text-base sm:text-lg font-bold font-bengali text-slate-900">
                           {item.bn}
                         </p>
                         <button
@@ -315,14 +308,14 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
                             e.stopPropagation();
                             speakBangla(item.bn);
                           }}
-                          className="p-1 rounded-md bg-slate-950 hover:bg-slate-800 text-emerald-400 hover:text-emerald-300 border border-slate-800 hover:border-emerald-500/40 transition text-[10px] flex items-center gap-0.5"
+                          className="p-1 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition text-[10px] flex items-center gap-0.5"
                           title="বাংলা অর্থ শুনুন"
                         >
-                          <Volume2 className="w-3 h-3" />
+                          <Volume2 className="w-3 h-3 text-[#558b2f]" />
                           <span className="font-bengali">BN</span>
                         </button>
                       </div>
-                      <span className="inline-block text-[11px] text-slate-400 font-bengali px-2.5 py-0.5 bg-slate-950 border border-slate-800 rounded-md mt-0.5">
+                      <span className="inline-block text-[11px] text-slate-500 font-bengali px-2 py-0.5 bg-[#faf8f5] border border-[#e8e2d4] rounded-md mt-0.5">
                         {item.category}
                       </span>
                     </div>
@@ -330,38 +323,38 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
                   </div>
 
                   {/* Right Column: Actions (Bookmark, Mastered, Expand) */}
-                  <div className="flex items-center justify-end gap-2 shrink-0 self-end sm:self-center" onClick={(e) => e.stopPropagation()}>
+                  <div className="flex items-center justify-end gap-1.5 shrink-0 self-end sm:self-center" onClick={(e) => e.stopPropagation()}>
                     
                     {/* Mastered Toggle */}
                     <button
                       onClick={() => onToggleMastered(item.id)}
-                      className={`p-2.5 rounded-xl border transition ${
+                      className={`p-2 rounded-xl border transition ${
                         isMastered
-                          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-xs'
-                          : 'bg-slate-950 text-slate-400 hover:text-emerald-300 border-slate-800 hover:border-emerald-500/30'
+                          ? 'bg-[#f4f9ea] text-[#3f6e1f] border-[#cce4ab]'
+                          : 'bg-white text-slate-400 hover:text-[#558b2f] border-[#e5dec9]'
                       }`}
                       title={isMastered ? 'শেখা হয়েছে' : 'শেখা শেষ হিসেবে চিহ্নিত করুন'}
                     >
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      <CheckCircle2 className="w-4 h-4 text-[#558b2f]" />
                     </button>
 
                     {/* Bookmark Toggle */}
                     <button
                       onClick={() => handleBookmarkToggle(item.id)}
-                      className={`p-2.5 rounded-xl border transition ${
+                      className={`p-2 rounded-xl border transition ${
                         isBookmarked
-                          ? 'bg-amber-500/20 text-amber-300 border-amber-500/50 shadow-xs'
-                          : 'bg-slate-950 text-slate-400 hover:text-amber-300 border-slate-800 hover:border-amber-500/30'
+                          ? 'bg-amber-50 text-amber-800 border-amber-300'
+                          : 'bg-white text-slate-400 hover:text-amber-500 border-[#e5dec9]'
                       }`}
                       title="বুকমার্ক করুন"
                     >
-                      <Star className={`w-4 h-4 ${isBookmarked ? 'fill-amber-400 text-amber-400' : ''}`} />
+                      <Star className={`w-4 h-4 ${isBookmarked ? 'fill-amber-500 text-amber-500' : ''}`} />
                     </button>
 
                     {/* Accordion Expand Button */}
                     <button
                       onClick={() => toggleRowExpand(item.id)}
-                      className="p-2.5 rounded-xl bg-slate-950 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 transition"
+                      className="p-2 rounded-xl bg-white text-slate-400 hover:text-slate-800 border border-[#e5dec9] transition"
                       title="বিস্তারিত বাক্য দেখুন"
                     >
                       {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -372,38 +365,38 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
 
                 {/* Expanded Details: Example Sentences & Furigana */}
                 {isExpanded && (
-                  <div className="px-4 sm:px-6 pb-4 sm:pb-5 pt-2 text-sm bg-slate-950/70 border-t border-slate-800/80 animate-in fade-in duration-150">
-                    <div className="bg-slate-900/90 p-4 rounded-xl border border-slate-800 space-y-2">
-                      <div className="flex items-center justify-between text-xs text-cyan-300 font-semibold font-bengali">
+                  <div className="px-4 sm:px-6 pb-4 pt-1 text-sm bg-[#faf8f5] border-t border-[#f0eae0] animate-in fade-in duration-150">
+                    <div className="bg-white p-3.5 rounded-xl border border-[#e8e2d4] space-y-2">
+                      <div className="flex items-center justify-between text-xs text-[#558b2f] font-semibold font-bengali">
                         <span className="flex items-center gap-1.5">
-                          <BookOpen className="w-4 h-4 text-cyan-400" />
+                          <BookOpen className="w-4 h-4" />
                           ব্যবহারিক উদাহরণ বাক্য (Example Sentence):
                         </span>
                         {item.exampleJp && (
                           <div className="flex items-center gap-1.5">
                             <button
                               onClick={() => speakJapanese(item.exampleJp!, { slow: false })}
-                              className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-cyan-400 hover:text-cyan-300 border border-slate-800 transition text-xs font-mono"
+                              className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-[#f4f9ea] hover:bg-[#e9f4d7] text-[#558b2f] border border-[#d6eab9] transition text-xs font-mono"
                               title="জাপানি বাক্য শুনুন"
                             >
-                              <Volume2 className="w-3.5 h-3.5" />
+                              <Volume2 className="w-3 h-3" />
                               <span>JP</span>
                             </button>
                             <button
                               onClick={() => speakJapanese(item.exampleJp!, { slow: true })}
-                              className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-amber-400 hover:text-amber-300 border border-slate-800 transition text-xs"
+                              className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-[#fef9ee] hover:bg-[#fef3d6] text-[#b45309] border border-[#fde68a] transition text-xs"
                               title="ধীরে জাপানি বাক্য শুনুন (Slow)"
                             >
-                              <Turtle className="w-3.5 h-3.5" />
+                              <Turtle className="w-3 h-3" />
                               <span>ধীরে</span>
                             </button>
                             {item.exampleBn && (
                               <button
                                 onClick={() => speakBangla(item.exampleBn!)}
-                                className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-emerald-400 hover:text-emerald-300 border border-slate-800 transition text-xs font-bengali"
+                                className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition text-xs font-bengali"
                                 title="বাংলা অর্থ শুনুন"
                               >
-                                <Volume2 className="w-3.5 h-3.5" />
+                                <Volume2 className="w-3 h-3 text-[#558b2f]" />
                                 <span>বাংলা</span>
                               </button>
                             )}
@@ -413,7 +406,7 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
 
                       {item.exampleJp ? (
                         <div>
-                          <p className="text-base font-japanese text-slate-100 font-medium">
+                          <p className="text-base font-japanese text-slate-900 font-medium">
                             {item.exampleFurigana || item.exampleJp}
                           </p>
                           {item.exampleRomaji && (
@@ -421,12 +414,12 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
                               {item.exampleRomaji}
                             </p>
                           )}
-                          <p className="text-sm font-bengali text-slate-300 mt-1">
+                          <p className="text-sm font-bengali text-slate-600 mt-1">
                             {item.exampleBn}
                           </p>
                         </div>
                       ) : (
-                        <p className="text-xs text-slate-500 italic font-bengali">
+                        <p className="text-xs text-slate-400 italic font-bengali">
                           এই শব্দের জন্য অতিরিক্ত বাক্য শীঘ্রই যুক্ত করা হবে।
                         </p>
                       )}
@@ -442,18 +435,18 @@ export const VocabListView: React.FC<VocabListViewProps> = ({
 
       {/* Sleek User-Friendly Bottom Bar for List View */}
       {filteredVocab.length > 0 && (
-        <div className="mt-8 pt-4 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 font-bengali">
+        <div className="mt-8 pt-4 border-t border-[#e8e2d4] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 font-bengali">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-cyan-400" />
+            <span className="w-2 h-2 rounded-full bg-[#558b2f]" />
             <span>মোট {allVocab.length}টির মধ্যে {filteredVocab.length}টি শব্দ প্রদর্শিত হচ্ছে</span>
           </div>
 
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-cyan-300 border border-slate-800 hover:border-cyan-500/40 transition shadow-sm active:scale-95"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-[#e5dec9] transition shadow-2xs active:scale-95"
             title="উপরে যান"
           >
-            <ArrowUp className="w-3.5 h-3.5" />
+            <ArrowUp className="w-3.5 h-3.5 text-[#558b2f]" />
             <span>উপরে স্ক্রোল করুন (Back to Top)</span>
           </button>
         </div>

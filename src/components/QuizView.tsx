@@ -6,9 +6,7 @@ import {
   RotateCcw, 
   Trophy, 
   Flame, 
-  HelpCircle,
   ArrowRight,
-  Sparkles,
   Sliders,
   Turtle
 } from 'lucide-react';
@@ -79,10 +77,10 @@ export const QuizView: React.FC<QuizViewProps> = ({
     setIsAnswerSubmitted(false);
     setScore(0);
     setStreak(0);
+    setBestStreak(0);
     setIsQuizCompleted(false);
   }, [allVocab]);
 
-  // Initial load
   useEffect(() => {
     generateQuiz(totalQuizQuestions);
   }, [generateQuiz, totalQuizQuestions]);
@@ -95,18 +93,19 @@ export const QuizView: React.FC<QuizViewProps> = ({
   };
 
   const handleSubmitAnswer = () => {
-    if (!selectedOption || !currentQ || isAnswerSubmitted) return;
+    if (!selectedOption || isAnswerSubmitted || !currentQ) return;
 
     setIsAnswerSubmitted(true);
     const isCorrect = selectedOption === currentQ.correctAnswer;
 
     if (isCorrect) {
       setScore((prev) => prev + 1);
-      const nextStreak = streak + 1;
-      setStreak(nextStreak);
-      if (nextStreak > bestStreak) setBestStreak(nextStreak);
-
-      if (nextStreak >= 3) {
+      const newStreak = streak + 1;
+      setStreak(newStreak);
+      if (newStreak > bestStreak) {
+        setBestStreak(newStreak);
+      }
+      if (newStreak >= 3 && newStreak % 3 === 0) {
         playStreakChime();
       } else {
         playSuccessChime();
@@ -140,43 +139,43 @@ export const QuizView: React.FC<QuizViewProps> = ({
     const percentage = Math.round((score / questions.length) * 100);
     return (
       <div id="quiz-complete-screen" className="max-w-lg mx-auto px-4 py-12 text-center">
-        <div className="bg-slate-900/90 backdrop-blur-xl rounded-[32px] p-8 border border-slate-700/70 shadow-2xl space-y-6">
-          <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 shadow-lg shadow-amber-500/20">
+        <div className="bg-white rounded-[32px] p-8 border border-[#e8e2d4] shadow-xs space-y-6">
+          <div className="w-20 h-20 mx-auto rounded-2xl bg-[#f6c445] flex items-center justify-center text-[#78350f] shadow-xs">
             <Trophy className="w-10 h-10" />
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold font-bengali text-white mb-1">
+            <h2 className="text-2xl font-bold font-bengali text-slate-900 mb-1">
               কুইজ সম্পন্ন হয়েছে!
             </h2>
-            <p className="text-slate-400 font-bengali text-sm">
+            <p className="text-slate-500 font-bengali text-sm">
               আপনার ফলাফল ও পারফরম্যান্স
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-3 py-2">
-            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
-              <span className="text-xs text-slate-400 font-bengali">সঠিক উত্তর</span>
-              <p className="text-2xl font-bold text-white font-mono mt-1">
+            <div className="p-4 rounded-2xl bg-[#faf8f5] border border-[#e8e2d4]">
+              <span className="text-xs text-slate-500 font-bengali">সঠিক উত্তর</span>
+              <p className="text-2xl font-bold text-slate-900 font-mono mt-1">
                 {score} / {questions.length}
               </p>
-              <span className="text-xs font-semibold text-cyan-400 font-mono">{percentage}%</span>
+              <span className="text-xs font-semibold text-[#558b2f] font-mono">{percentage}%</span>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
-              <span className="text-xs text-slate-400 font-bengali">সেরা স্ট্রিক</span>
-              <p className="text-2xl font-bold text-amber-400 font-mono flex items-center justify-center gap-1 mt-1">
-                <Flame className="w-5 h-5 fill-amber-400" />
+            <div className="p-4 rounded-2xl bg-[#faf8f5] border border-[#e8e2d4]">
+              <span className="text-xs text-slate-500 font-bengali">সেরা স্ট্রিক</span>
+              <p className="text-2xl font-bold text-amber-600 font-mono flex items-center justify-center gap-1 mt-1">
+                <Flame className="w-5 h-5 fill-amber-500" />
                 {bestStreak}
               </p>
-              <span className="text-xs text-slate-400 font-bengali">টানা সঠিক</span>
+              <span className="text-xs text-slate-500 font-bengali">টানা সঠিক</span>
             </div>
           </div>
 
           <button
             id="btn-quiz-retry"
             onClick={() => generateQuiz(totalQuizQuestions)}
-            className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold font-bengali shadow-xl shadow-blue-900/30 transition active:scale-95 uppercase tracking-wider"
+            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-[#558b2f] hover:bg-[#467326] text-white font-bold font-bengali shadow-xs transition active:scale-95 uppercase tracking-wider"
           >
             <RotateCcw className="w-4 h-4" />
             <span>আবার কুইজ দিন (Play Again)</span>
@@ -187,55 +186,55 @@ export const QuizView: React.FC<QuizViewProps> = ({
   }
 
   return (
-    <div id="quiz-container" className="max-w-2xl mx-auto px-4 py-6">
+    <div id="quiz-container" className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
       
       {/* Quiz Progress Header */}
-      <div className="flex items-center justify-between mb-4 bg-slate-900/80 backdrop-blur-xl p-4 rounded-2xl border border-slate-800 shadow-xl shadow-black/20">
-        <div className="flex items-center gap-2">
-          <span className="px-3 py-1 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-cyan-400 font-mono">
-            Question {currentIdx + 1} / {questions.length}
+      <div className="flex items-center justify-between mb-4 bg-white p-3.5 sm:p-4 rounded-2xl border border-[#e8e2d4] shadow-xs">
+        <div className="flex items-center gap-2 font-bengali">
+          <span className="px-3 py-1 rounded-xl bg-[#faf8f5] border border-[#e2dcd0] text-xs font-bold text-[#558b2f] font-mono">
+            প্রশ্ন {currentIdx + 1} / {questions.length}
           </span>
-          <span className="text-xs text-slate-400 font-bengali">
-            স্কোর: <strong className="text-white font-mono">{score}</strong>
+          <span className="text-xs text-slate-600">
+            স্কোর: <strong className="text-slate-900 font-mono">{score}</strong>
           </span>
         </div>
 
         {streak > 1 && (
-          <div className="flex items-center gap-1.5 text-xs font-bold text-amber-300 bg-amber-500/20 px-3 py-1 rounded-xl border border-amber-500/40 animate-pulse font-mono">
-            <Flame className="w-4 h-4 fill-amber-400" />
+          <div className="flex items-center gap-1.5 text-xs font-bold text-[#78350f] bg-amber-100 px-3 py-1 rounded-xl border border-amber-300 font-mono">
+            <Flame className="w-4 h-4 fill-amber-500 text-amber-500" />
             <span>{streak} STREAK!</span>
           </div>
         )}
       </div>
 
       {/* Question Card */}
-      <div className="bg-slate-900/80 backdrop-blur-xl rounded-[32px] border border-slate-700/60 shadow-2xl p-6 sm:p-8 mb-6 text-center space-y-5">
+      <div className="bg-white rounded-[32px] border border-[#e8e2d4] shadow-xs p-6 sm:p-8 mb-6 text-center space-y-5">
         
-        <div className="flex items-center justify-between text-xs text-slate-400 font-bengali">
-          <span className="px-2.5 py-1 rounded-md bg-slate-950 text-cyan-400 border border-slate-800 text-xs font-mono">
+        <div className="flex items-center justify-between text-xs text-slate-500 font-bengali">
+          <span className="px-2.5 py-1 rounded-md bg-[#faf8f5] text-slate-600 border border-[#e8e2d4] text-xs font-bengali">
             {currentQ.vocab.category}
           </span>
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => speakJapanese(currentQ.vocab.hiragana || currentQ.vocab.kanji, { slow: false })}
-              className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-cyan-400 hover:text-cyan-300 border border-slate-800 font-medium transition text-xs"
+              className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#f4f9ea] hover:bg-[#e9f4d7] text-[#558b2f] border border-[#d6eab9] font-medium transition text-xs"
               title="স্বাভাবিক স্পষ্ট উচ্চারণ শুনুন"
             >
-              <Volume2 className="w-4 h-4" />
+              <Volume2 className="w-3.5 h-3.5" />
               <span>উচ্চারণ</span>
             </button>
             <button
               onClick={() => speakJapanese(currentQ.vocab.hiragana || currentQ.vocab.kanji, { slow: true })}
-              className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-amber-400 hover:text-amber-300 border border-slate-800 font-medium transition text-xs"
-              title="ধীর ও স্পষ্ট সিলেবল উচ্চারণ (0.65x)"
+              className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#fef9ee] hover:bg-[#fef3d6] text-[#b45309] border border-[#fde68a] font-medium transition text-xs"
+              title="ধীর উচ্চারণ (0.65x)"
             >
-              <Turtle className="w-4 h-4" />
+              <Turtle className="w-3.5 h-3.5" />
               <span>ধীরে</span>
             </button>
             {onOpenVoiceSettings && (
               <button
                 onClick={onOpenVoiceSettings}
-                className="p-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-cyan-300 border border-slate-800 transition"
+                className="p-1.5 rounded-xl bg-[#faf8f5] hover:bg-slate-100 text-slate-500 border border-[#e8e2d4] transition"
                 title="ভয়েস সেটিংস"
               >
                 <Sliders className="w-3.5 h-3.5" />
@@ -245,10 +244,10 @@ export const QuizView: React.FC<QuizViewProps> = ({
         </div>
 
         <div className="py-2">
-          <h2 className="text-4xl sm:text-6xl font-bold font-japanese text-white mb-2 drop-shadow-md">
+          <h2 className="text-5xl sm:text-6xl font-bold font-japanese text-slate-900 mb-2">
             {currentQ.vocab.kanji}
           </h2>
-          <p className="text-xl sm:text-2xl font-light font-japanese text-cyan-400">
+          <p className="text-xl sm:text-2xl font-semibold font-japanese text-[#558b2f]">
             {currentQ.vocab.hiragana}
             <span className="text-xs text-slate-400 font-mono ml-2 font-normal">
               [{currentQ.vocab.romaji}]
@@ -256,7 +255,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
           </p>
         </div>
 
-        <p className="text-xs sm:text-sm text-slate-400 font-bengali">
+        <p className="text-xs sm:text-sm text-slate-500 font-bengali">
           নিচের কোন বাংলা অর্থটি সঠিক? নির্বাচন করুন:
         </p>
 
@@ -266,18 +265,18 @@ export const QuizView: React.FC<QuizViewProps> = ({
             const isSelected = selectedOption === option;
             const isCorrect = option === currentQ.correctAnswer;
 
-            let buttonStyle = 'bg-slate-950/70 hover:bg-slate-850 border-slate-800 text-slate-200';
+            let buttonStyle = 'bg-white hover:bg-[#faf8f5] border-[#e2dcd0] text-slate-800';
 
             if (isAnswerSubmitted) {
               if (isCorrect) {
-                buttonStyle = 'bg-emerald-950/70 border-emerald-500 text-emerald-200 ring-2 ring-emerald-500/30';
+                buttonStyle = 'bg-emerald-50 border-emerald-500 text-emerald-900 ring-2 ring-emerald-500/20';
               } else if (isSelected && !isCorrect) {
-                buttonStyle = 'bg-rose-950/70 border-rose-500 text-rose-200 ring-2 ring-rose-500/30';
+                buttonStyle = 'bg-rose-50 border-rose-400 text-rose-900 ring-2 ring-rose-400/20';
               } else {
-                buttonStyle = 'bg-slate-950/30 border-slate-900 text-slate-600 opacity-50';
+                buttonStyle = 'bg-[#faf8f5] border-[#e8e2d4] text-slate-400 opacity-50';
               }
             } else if (isSelected) {
-              buttonStyle = 'bg-blue-950/60 border-cyan-500 text-white ring-2 ring-cyan-500/30';
+              buttonStyle = 'bg-[#f4f9ea] border-[#558b2f] text-slate-900 ring-2 ring-[#558b2f]/20 font-bold';
             }
 
             return (
@@ -297,16 +296,16 @@ export const QuizView: React.FC<QuizViewProps> = ({
                           e.stopPropagation();
                           speakBangla(option);
                         }}
-                        className="p-1 rounded-lg bg-emerald-900/60 hover:bg-emerald-800 text-emerald-300 transition"
+                        className="p-1 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-800 transition"
                         title="বাংলা শুনুন"
                       >
                         <Volume2 className="w-3.5 h-3.5" />
                       </button>
-                      <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                      <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                     </>
                   )}
                   {isAnswerSubmitted && isSelected && !isCorrect && (
-                    <XCircle className="w-5 h-5 text-rose-400" />
+                    <XCircle className="w-5 h-5 text-rose-500" />
                   )}
                 </div>
               </button>
@@ -315,16 +314,16 @@ export const QuizView: React.FC<QuizViewProps> = ({
         </div>
 
         {/* Action Button: Check Answer or Next Question */}
-        <div className="pt-4">
+        <div className="pt-3">
           {!isAnswerSubmitted ? (
             <button
               id="btn-submit-answer"
               disabled={!selectedOption}
               onClick={handleSubmitAnswer}
-              className={`w-full py-4 rounded-2xl font-bold font-bengali transition uppercase tracking-wider ${
+              className={`w-full py-3.5 rounded-2xl font-bold font-bengali transition uppercase tracking-wider ${
                 selectedOption
-                  ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white shadow-xl shadow-blue-900/30 active:scale-95 cursor-pointer'
-                  : 'bg-slate-950 text-slate-600 border border-slate-800 cursor-not-allowed'
+                  ? 'bg-[#558b2f] hover:bg-[#467326] text-white shadow-xs active:scale-95 cursor-pointer'
+                  : 'bg-[#faf8f5] text-slate-400 border border-[#e2dcd0] cursor-not-allowed'
               }`}
             >
               উত্তর নিশ্চিত করুন (Submit)
@@ -333,7 +332,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
             <button
               id="btn-next-question"
               onClick={handleNextQuestion}
-              className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold font-bengali transition shadow-xl shadow-cyan-900/30 flex items-center justify-center gap-2 active:scale-95 uppercase tracking-wider"
+              className="w-full py-3.5 rounded-2xl bg-[#558b2f] hover:bg-[#467326] text-white font-bold font-bengali transition shadow-xs flex items-center justify-center gap-2 active:scale-95 uppercase tracking-wider"
             >
               <span>পরবর্তী প্রশ্ন (Next)</span>
               <ArrowRight className="w-4 h-4" />

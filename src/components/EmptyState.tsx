@@ -60,17 +60,17 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   return (
     <div
       id="vocab-empty-state"
-      className="flex flex-col items-center justify-center p-8 sm:p-12 text-center bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-dashed border-slate-800 max-w-lg mx-auto my-8 shadow-xl shadow-black/30"
+      className="flex flex-col items-center justify-center p-8 sm:p-12 text-center bg-white rounded-3xl border border-[#e8e2d4] max-w-lg mx-auto my-8 shadow-xs"
     >
-      <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 mb-4 ring-8 ring-slate-950/50">
+      <div className="p-4 rounded-2xl bg-[#faf8f5] border border-[#e8e2d4] mb-4">
         {getIcon()}
       </div>
 
-      <h3 className="text-lg sm:text-xl font-bold text-white font-bengali mb-2">
+      <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-bengali mb-2">
         {getTitle()}
       </h3>
 
-      <p className="text-sm text-slate-400 font-bengali leading-relaxed max-w-md mb-6">
+      <p className="text-sm text-slate-500 font-bengali leading-relaxed max-w-md mb-6">
         {getDescription()}
       </p>
 
@@ -78,20 +78,20 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         <button
           id="btn-reset-filters"
           onClick={onResetFilters}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold font-bengali text-xs uppercase tracking-wider transition-all shadow-lg shadow-blue-600/20"
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#558b2f] hover:bg-[#467326] text-white font-bold font-bengali text-xs uppercase tracking-wider transition-all shadow-xs active:scale-95"
         >
           <RotateCcw className="w-4 h-4" />
-          <span>ফিল্টার রিসেট করুন (Reset Filters)</span>
+          <span>ফিল্টার রিসেট করুন</span>
         </button>
 
         {onRestoreAll && (
           <button
             id="btn-restore-all"
             onClick={onRestoreAll}
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-950 hover:bg-slate-800 text-cyan-400 hover:text-cyan-300 font-bold font-bengali text-xs uppercase tracking-wider transition-all border border-slate-800"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#faf8f5] hover:bg-slate-100 text-slate-700 font-bold font-bengali text-xs uppercase tracking-wider transition-all border border-[#e2dcd0]"
           >
-            <BookOpen className="w-4 h-4" />
-            <span>সকল ৮০০+ শব্দ দেখুন (View All 800+)</span>
+            <BookOpen className="w-4 h-4 text-[#558b2f]" />
+            <span>সকল ৮৩৮ শব্দ দেখুন</span>
           </button>
         )}
       </div>

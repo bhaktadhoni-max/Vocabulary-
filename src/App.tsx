@@ -110,13 +110,7 @@ export function App() {
   }, [studyMode, bookmarkedIds, masteredIds, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-100 flex flex-col relative overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200 font-sans">
-      {/* Immersive Ambient Glow Orbs */}
-      <div className="fixed inset-0 w-full h-full pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[45%] h-[45%] bg-blue-600/20 rounded-full blur-[130px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] bg-indigo-900/25 rounded-full blur-[130px]" />
-        <div className="absolute top-[40%] right-[-5%] w-[30%] h-[30%] bg-cyan-600/10 rounded-full blur-[120px]" />
-      </div>
+    <div className="min-h-screen bg-[#fbf8f2] text-slate-900 flex flex-col relative overflow-x-hidden selection:bg-[#558b2f]/20 selection:text-[#558b2f] font-sans">
       
       {/* Top Sticky Navigation */}
       <Navbar
@@ -135,7 +129,7 @@ export function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto pb-16 z-10">
+      <main className="flex-1 max-w-5xl w-full mx-auto pb-12 z-10">
         
         {/* FLASHCARD MODE */}
         {studyMode === 'flashcards' && (
@@ -193,13 +187,13 @@ export function App() {
           <div className="max-w-4xl mx-auto px-4 py-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className="text-xl font-bold font-bengali text-white flex items-center gap-2">
+                <h2 className="text-xl font-bold font-bengali text-slate-900 flex items-center gap-2">
                   <span>সংরক্ষিত শব্দাবলী (Bookmarked Words)</span>
-                  <span className="text-xs font-mono font-normal px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <span className="text-xs font-mono font-normal px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-300">
                     {bookmarkedIds.size} টি
                   </span>
                 </h2>
-                <p className="text-xs text-slate-400 font-bengali mt-0.5">
+                <p className="text-xs text-slate-600 font-bengali mt-0.5">
                   আপনার স্টার চিহ্নিত প্রয়োজনীয় শব্দগুলো এখানে অনুশীলনের জন্য রাখা হয়েছে
                 </p>
               </div>
@@ -233,13 +227,13 @@ export function App() {
           <div className="max-w-4xl mx-auto px-4 py-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className="text-xl font-bold font-bengali text-white flex items-center gap-2">
+                <h2 className="text-xl font-bold font-bengali text-slate-900 flex items-center gap-2">
                   <span>আয়ত্ত করা শব্দাবলী (Mastered Words)</span>
-                  <span className="text-xs font-mono font-normal px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  <span className="text-xs font-mono font-normal px-2.5 py-0.5 rounded-full bg-[#f4f9ea] text-[#3f6e1f] border border-[#cce4ab]">
                     {masteredIds.size} টি
                   </span>
                 </h2>
-                <p className="text-xs text-slate-400 font-bengali mt-0.5">
+                <p className="text-xs text-slate-600 font-bengali mt-0.5">
                   যেসব শব্দ সফলভাবে মুখস্ত সম্পন্ন হয়েছে
                 </p>
               </div>
@@ -286,18 +280,18 @@ export function App() {
         onClose={() => setIsVoiceSettingsOpen(false)}
       />
 
-      {/* Immersive Footer */}
-      <footer className="border-t border-slate-800/60 bg-slate-950/80 backdrop-blur-xl py-6 mt-auto z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-bengali text-slate-400">
-            <div className="flex items-center gap-3">
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-slate-300 font-medium">
-                JLPT N5 জাপানি শব্দকোষ • ৮০০+ সম্পূর্ণ শব্দ ও বাংলা অনুবাদ
+      {/* Clean Light Footer */}
+      <footer className="border-t border-[#e8e2d4] bg-[#fbf8f2]/90 backdrop-blur-md py-5 mt-auto z-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-bengali text-slate-500">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[#558b2f]" />
+              <span className="text-slate-700 font-medium">
+                JLPT N5 জাপানি শব্দকোষ • ৮৩৮টি সম্পূর্ণ শব্দ ও বাংলা অনুবাদ
               </span>
             </div>
-            <div className="flex items-center gap-4 text-slate-400 font-mono text-[11px]">
-              <span className="px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-cyan-400">
+            <div className="flex items-center gap-3 text-slate-400 font-mono text-[11px]">
+              <span className="px-2.5 py-0.5 rounded-full bg-white border border-[#e5dec9] text-[#558b2f] font-semibold">
                 OFFLINE READY
               </span>
               <span>AUDIO TTS ENABLED</span>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Trophy, CheckCircle2, Star, BookOpen, RotateCcw, Flame } from 'lucide-react';
+import { X, Trophy, CheckCircle2, Star, BookOpen, RotateCcw } from 'lucide-react';
 import { VocabItem } from '../types';
 import { CATEGORIES } from '../data/categories';
 
@@ -28,20 +28,20 @@ export const StatsModal: React.FC<StatsModalProps> = ({
   const percent = Math.round((masteredCount / (total || 1)) * 100);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="bg-slate-900/95 backdrop-blur-xl w-full max-w-2xl rounded-3xl shadow-2xl shadow-black/80 border border-slate-700/80 overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="bg-white w-full max-w-2xl rounded-3xl shadow-xl border border-[#e8e2d4] overflow-hidden flex flex-col max-h-[90vh]">
         
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-800 flex items-center justify-between">
+        <div className="p-5 sm:p-6 border-b border-[#e8e2d4] flex items-center justify-between bg-[#faf8f5]">
           <div className="flex items-center gap-2.5">
-            <div className="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+            <div className="p-2.5 rounded-xl bg-[#f4f9ea] text-[#558b2f] border border-[#d6eab9]">
               <Trophy className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-white text-lg font-bengali">
+              <h3 className="font-bold text-slate-900 text-lg font-bengali">
                 JLPT N5 পড়াশোনার অগ্রগতি
               </h3>
-              <p className="text-xs text-slate-400 font-bengali">
+              <p className="text-xs text-slate-500 font-bengali">
                 মোট শব্দকোষ ও বিভাগভিত্তিক সমাপ্তির হিসাব
               </p>
             </div>
@@ -49,7 +49,7 @@ export const StatsModal: React.FC<StatsModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition"
+            className="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-400 hover:text-slate-700 border border-[#e8e2d4] transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -59,53 +59,53 @@ export const StatsModal: React.FC<StatsModalProps> = ({
         <div className="p-5 sm:p-6 overflow-y-auto space-y-6">
           
           {/* Main Completion Progress Bar */}
-          <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 shadow-inner">
+          <div className="p-5 rounded-2xl bg-[#faf8f5] border border-[#e8e2d4]">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-bold font-bengali text-slate-200">
+              <span className="text-sm font-bold font-bengali text-slate-800">
                 সার্বিক সমাপ্তির হার
               </span>
-              <span className="text-lg font-extrabold text-cyan-400 font-mono">
+              <span className="text-lg font-extrabold text-[#558b2f] font-mono">
                 {percent}%
               </span>
             </div>
 
-            <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+            <div className="w-full h-3 bg-[#e8e2d4] rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-400 rounded-full transition-all duration-500 shadow-lg shadow-cyan-500/30"
+                className="h-full bg-[#558b2f] rounded-full transition-all duration-500 shadow-xs"
                 style={{ width: `${percent}%` }}
               />
             </div>
 
-            <div className="flex items-center justify-between text-xs text-slate-400 mt-2 font-bengali">
-              <span>শেখা হয়েছে: <strong className="text-white font-mono">{masteredCount}</strong> টি</span>
-              <span>বাকি আছে: <strong className="text-white font-mono">{total - masteredCount}</strong> টি</span>
+            <div className="flex items-center justify-between text-xs text-slate-500 mt-2 font-bengali">
+              <span>শেখা হয়েছে: <strong className="text-slate-800 font-mono">{masteredCount}</strong> টি</span>
+              <span>বাকি আছে: <strong className="text-slate-800 font-mono">{total - masteredCount}</strong> টি</span>
             </div>
           </div>
 
           {/* Quick Metrics Grid */}
           <div className="grid grid-cols-3 gap-3">
-            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
-              <BookOpen className="w-5 h-5 text-cyan-400 mx-auto mb-1" />
-              <span className="text-xs text-slate-400 font-bengali">মোট শব্দ</span>
-              <p className="text-xl font-bold text-white font-mono mt-0.5">{total}</p>
+            <div className="p-4 rounded-2xl bg-[#faf8f5] border border-[#e8e2d4] text-center">
+              <BookOpen className="w-5 h-5 text-slate-600 mx-auto mb-1" />
+              <span className="text-xs text-slate-500 font-bengali">মোট শব্দ</span>
+              <p className="text-xl font-bold text-slate-900 font-mono mt-0.5">{total}</p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-950/80 border border-emerald-900/40 text-center">
-              <CheckCircle2 className="w-5 h-5 text-emerald-400 mx-auto mb-1" />
-              <span className="text-xs text-emerald-400 font-bengali">শেখা শেষ</span>
-              <p className="text-xl font-bold text-emerald-300 font-mono mt-0.5">{masteredCount}</p>
+            <div className="p-4 rounded-2xl bg-[#f4f9ea] border border-[#d6eab9] text-center">
+              <CheckCircle2 className="w-5 h-5 text-[#558b2f] mx-auto mb-1" />
+              <span className="text-xs text-[#558b2f] font-bengali font-semibold">শেখা শেষ</span>
+              <p className="text-xl font-bold text-[#3f6e1f] font-mono mt-0.5">{masteredCount}</p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-950/80 border border-amber-900/40 text-center">
-              <Star className="w-5 h-5 text-amber-400 fill-amber-400 mx-auto mb-1" />
-              <span className="text-xs text-amber-400 font-bengali">সংরক্ষিত</span>
-              <p className="text-xl font-bold text-amber-300 font-mono mt-0.5">{bookmarkedCount}</p>
+            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-center">
+              <Star className="w-5 h-5 text-amber-500 fill-amber-500 mx-auto mb-1" />
+              <span className="text-xs text-amber-800 font-bengali font-semibold">সংরক্ষিত</span>
+              <p className="text-xl font-bold text-amber-900 font-mono mt-0.5">{bookmarkedCount}</p>
             </div>
           </div>
 
           {/* Category-by-Category Mastery breakdown */}
           <div>
-            <h4 className="text-sm font-bold font-bengali text-slate-200 mb-3">
+            <h4 className="text-sm font-bold font-bengali text-slate-800 mb-3">
               বিভাগভিত্তিক আয়ত্ত তালিকা ({CATEGORIES.length} টি অধ্যায়)
             </h4>
             <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
@@ -115,16 +115,16 @@ export const StatsModal: React.FC<StatsModalProps> = ({
                 const catPercent = Math.round((catMastered / (catVocab.length || 1)) * 100);
 
                 return (
-                  <div key={cat.key} className="flex items-center justify-between p-3 rounded-xl bg-slate-950/60 hover:bg-slate-800/40 border border-slate-800/80 text-xs">
+                  <div key={cat.key} className="flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-[#faf8f5] hover:bg-[#f3eee5] border border-[#e8e2d4] text-xs transition">
                     <div className="flex items-center gap-2 flex-1 min-w-0 pr-2">
                       <span className="text-base">{cat.icon}</span>
-                      <span className="font-medium font-bengali text-slate-300 truncate">{cat.nameBn}</span>
+                      <span className="font-medium font-bengali text-slate-800 truncate">{cat.nameBn}</span>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-slate-500 font-mono">
+                      <span className="text-slate-400 font-mono">
                         {catMastered}/{catVocab.length}
                       </span>
-                      <span className="font-bold text-cyan-400 font-mono w-10 text-right">
+                      <span className="font-bold text-[#558b2f] font-mono w-10 text-right">
                         {catPercent}%
                       </span>
                     </div>
@@ -137,7 +137,7 @@ export const StatsModal: React.FC<StatsModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 sm:p-5 border-t border-slate-800 bg-slate-950/90 flex items-center justify-between">
+        <div className="p-4 sm:p-5 border-t border-[#e8e2d4] bg-[#faf8f5] flex items-center justify-between">
           <button
             onClick={() => {
               if (window.confirm('আপনি কি সত্যিই আপনার অগ্রগতি ও বুকমার্ক রিসেট করতে চান?')) {
@@ -145,15 +145,15 @@ export const StatsModal: React.FC<StatsModalProps> = ({
                 onClose();
               }
             }}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:text-rose-300 bg-rose-950/30 hover:bg-rose-950/50 border border-rose-900/50 transition"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-700 hover:text-rose-900 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>অগ্রগতি রিসেট করুন (Reset)</span>
+            <span>অগ্রগতি রিসেট করুন</span>
           </button>
 
           <button
             onClick={onClose}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold font-bengali transition shadow-lg shadow-blue-600/20"
+            className="px-6 py-2 rounded-xl bg-[#558b2f] hover:bg-[#467326] text-white text-xs font-bold font-bengali transition shadow-xs"
           >
             বন্ধ করুন
           </button>

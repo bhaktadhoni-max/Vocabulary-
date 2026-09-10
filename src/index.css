@@ -3,8 +3,8 @@
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', 'Noto Sans Bengali', 'Hind Siliguri', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
-    background-color: #020617;
-    color: #f1f5f9;
+    background-color: #fbf8f2;
+    color: #1f2937;
   }
 }
 
@@ -21,6 +21,7 @@
 /* 3D Flip Card Utilities & Smooth Physics */
 .perspective-1000 {
   perspective: 1200px;
+  -webkit-perspective: 1200px;
 }
 
 .preserve-3d {
@@ -31,17 +32,18 @@
 .backface-hidden {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  transform: translate3d(0, 0, 0);
 }
 
 .rotate-y-180 {
   transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }
 
 /* Smooth Spring & Fluid Ease for Card Flip */
 .flip-card-inner {
-  transition: transform 0.7s cubic-bezier(0.34, 1.2, 0.64, 1);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
   will-change: transform;
 }
 
@@ -68,24 +70,24 @@
   animation: gradientShimmer 4s ease infinite;
 }
 
-/* Custom dark sleek scrollbar */
+/* Custom clean soft scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: #fbf8f2;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #d6cfc0;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #b5ac9d;
 }
 
 /* Print Styles for Downloadable PDF Book & Print-to-PDF */
