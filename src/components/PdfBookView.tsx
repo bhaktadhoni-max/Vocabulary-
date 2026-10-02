@@ -172,20 +172,20 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
     <div className="max-w-6xl mx-auto px-3 sm:px-6 py-6 font-sans">
       
       {/* Top Floating Action & Configuration Hub (Hidden when printing) */}
-      <div className="no-print bg-white border border-[#e8e2d4] rounded-2xl p-4 sm:p-5 shadow-xs mb-8 sticky top-20 z-30">
+      <div className="no-print bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-4 sm:p-5 shadow-sm mb-8 sticky top-20 z-30 transition-colors">
         
         {/* Row 1: Header Titles and Main Download Buttons */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#e8e2d4]">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-200/80 dark:border-slate-800">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="p-1.5 rounded-lg bg-[#f4f9ea] text-[#558b2f] border border-[#d6eab9]">
+              <span className="p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
                 <BookOpen className="w-4 h-4" />
               </span>
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 font-bengali">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white font-bengali">
                 JLPT N5 সম্পূর্ণ শব্দকোষ ও বই (PDF Book Edition)
               </h2>
             </div>
-            <p className="text-xs sm:text-sm text-slate-500 font-bengali">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-bengali">
               সম্পূর্ণ ৮৩৮টি শব্দ, কাঞ্জি, হিরাগানা, রোমাজি ও বাংলা অনুবাদ সংবলিত প্রকাশনা মানসম্পন্ন ডিজিটাল বই
             </p>
           </div>
@@ -197,7 +197,7 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
             <button
               id="btn-download-pdf-modal"
               onClick={() => setIsDownloadModalOpen(true)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#558b2f] hover:bg-[#467326] text-white font-semibold text-xs sm:text-sm shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer font-bengali"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer font-bengali"
               title="পিডিএফ ফাইল ডাউনলোড করুন"
             >
               <Download className="w-4 h-4 text-white" />
@@ -209,10 +209,10 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
             <button
               id="btn-print-to-pdf"
               onClick={handlePrintToPdf}
-              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-[#e2dcd0] font-medium text-xs sm:text-sm transition-all cursor-pointer font-bengali shadow-2xs"
+              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-medium text-xs sm:text-sm transition-all cursor-pointer font-bengali shadow-2xs"
               title="সরাসরি প্রিন্ট বা ব্রাউজার থেকে PDF হিসেবে সেভ করুন"
             >
-              <Printer className="w-4 h-4 text-[#558b2f]" />
+              <Printer className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
               <span>প্রিন্ট / সেভ PDF</span>
             </button>
 
@@ -220,10 +220,10 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
             <button
               id="btn-download-offline-html"
               onClick={handleDownloadOfflineBook}
-              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-[#e2dcd0] font-medium text-xs sm:text-sm transition-all cursor-pointer font-bengali shadow-2xs"
+              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-medium text-xs sm:text-sm transition-all cursor-pointer font-bengali shadow-2xs"
               title="ইন্টারনেট ছাড়া যেকোনো ব্রাউজারে পড়ার অফলাইন বই ফাইল"
             >
-              <FileText className="w-4 h-4 text-amber-600" />
+              <FileText className="w-4 h-4 text-amber-500" />
               <span className="hidden sm:inline">অফলাইন ফাইল (.html)</span>
             </button>
           </div>
@@ -241,12 +241,12 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="বইয়ের মধ্যে শব্দ খুঁজুন (কাঞ্জি, রোমাজি, বাংলা)..."
-              className="w-full pl-9 pr-3 py-2 bg-[#faf8f5] border border-[#e2dcd0] rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#558b2f] font-bengali"
+              className="w-full pl-9 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-600 font-bengali"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-700"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
               >
                 ✕
               </button>
@@ -259,9 +259,9 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
               id="select-book-chapter"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-3 py-2 bg-[#faf8f5] border border-[#e2dcd0] rounded-xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:border-[#558b2f] font-bengali cursor-pointer"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-indigo-600 font-bengali cursor-pointer"
             >
-              <option value="all">📖 সম্পূর্ণ বই (সকল ২৪টি অধ্যায় - ৮৩৮টি শব্দ)</option>
+              <option value="all">📖 সম্পূর্ণ বই (সকল ২৪টি অধ্যায় - ৭১৮টি শব্দ)</option>
               {CATEGORIES.filter((c) => c.key !== 'all').map((cat, i) => (
                 <option key={cat.key} value={cat.key}>
                   {i + 1}. {cat.icon} {cat.nameBn} ({cat.count} টি)
@@ -274,13 +274,13 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
           <div className="md:col-span-4 flex items-center justify-end gap-2 flex-wrap text-xs">
             
             {/* View Mode Toggle */}
-            <div className="flex rounded-lg bg-[#faf8f5] border border-[#e2dcd0] p-0.5">
+            <div className="flex rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-0.5">
               <button
                 onClick={() => setViewMode('cards')}
                 className={`px-2.5 py-1.5 rounded-md font-bengali transition ${
                   viewMode === 'cards' 
-                    ? 'bg-[#558b2f] text-white shadow-xs font-bold' 
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-indigo-600 text-white shadow-xs font-bold' 
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
                 title="কার্ড লেআউট"
               >
@@ -290,8 +290,8 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
                 onClick={() => setViewMode('table')}
                 className={`px-2.5 py-1.5 rounded-md font-bengali transition ${
                   viewMode === 'table' 
-                    ? 'bg-[#558b2f] text-white shadow-xs font-bold' 
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-indigo-600 text-white shadow-xs font-bold' 
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
                 title="ঘন টেবিল লেআউট"
               >
@@ -304,8 +304,8 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
               onClick={() => setShowRomaji(!showRomaji)}
               className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono transition ${
                 showRomaji 
-                  ? 'bg-[#f4f9ea] text-[#3f6e1f] border-[#cce4ab] font-bold' 
-                  : 'bg-[#faf8f5] text-slate-500 border-[#e2dcd0]'
+                  ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800 font-bold' 
+                  : 'bg-slate-50 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-700'
               }`}
               title="রোমাজি অন/অফ"
             >
@@ -317,8 +317,8 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
               onClick={() => setShowExamples(!showExamples)}
               className={`px-2.5 py-1.5 rounded-lg border font-bengali text-xs transition ${
                 showExamples 
-                  ? 'bg-[#f4f9ea] text-[#3f6e1f] border-[#cce4ab] font-bold' 
-                  : 'bg-[#faf8f5] text-slate-500 border-[#e2dcd0]'
+                  ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800 font-bold' 
+                  : 'bg-slate-50 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-700'
               }`}
               title="উদাহরণ বাক্য প্রদর্শন"
             >
@@ -326,22 +326,22 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
             </button>
 
             {/* Font Size Adjust */}
-            <div className="flex rounded-lg bg-[#faf8f5] border border-[#e2dcd0] p-0.5">
+            <div className="flex rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-0.5">
               <button
                 onClick={() => setFontSize('sm')}
-                className={`px-2 py-1 rounded text-xs ${fontSize === 'sm' ? 'bg-white shadow-xs text-slate-900 font-bold' : 'text-slate-500'}`}
+                className={`px-2 py-1 rounded text-xs ${fontSize === 'sm' ? 'bg-white dark:bg-slate-700 shadow-xs text-slate-900 dark:text-white font-bold' : 'text-slate-500 dark:text-slate-400'}`}
               >
                 A-
               </button>
               <button
                 onClick={() => setFontSize('base')}
-                className={`px-2 py-1 rounded text-xs ${fontSize === 'base' ? 'bg-white shadow-xs text-slate-900 font-bold' : 'text-slate-500'}`}
+                className={`px-2 py-1 rounded text-xs ${fontSize === 'base' ? 'bg-white dark:bg-slate-700 shadow-xs text-slate-900 dark:text-white font-bold' : 'text-slate-500 dark:text-slate-400'}`}
               >
                 A
               </button>
               <button
                 onClick={() => setFontSize('lg')}
-                className={`px-2 py-1 rounded text-xs ${fontSize === 'lg' ? 'bg-white shadow-xs text-slate-900 font-bold' : 'text-slate-500'}`}
+                className={`px-2 py-1 rounded text-xs ${fontSize === 'lg' ? 'bg-white dark:bg-slate-700 shadow-xs text-slate-900 dark:text-white font-bold' : 'text-slate-500 dark:text-slate-400'}`}
               >
                 A+
               </button>
@@ -352,18 +352,18 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
 
         {/* Quick Chapter Chips Bar */}
         {selectedCategory === 'all' && !searchQuery && (
-          <div className="flex items-center gap-1.5 overflow-x-auto pt-3 mt-3 border-t border-[#e8e2d4] pb-1 scrollbar-none text-xs">
-            <span className="text-slate-500 font-bengali whitespace-nowrap pl-1 pr-2">
+          <div className="flex items-center gap-1.5 overflow-x-auto pt-3 mt-3 border-t border-slate-200/80 dark:border-slate-800 pb-1 scrollbar-none text-xs">
+            <span className="text-slate-500 dark:text-slate-400 font-bengali whitespace-nowrap pl-1 pr-2">
               দ্রুত অধ্যায়ে যান:
             </span>
             {CATEGORIES.filter((c) => c.key !== 'all').map((cat) => (
               <button
                 key={cat.key}
                 onClick={() => scrollToSection(cat.key)}
-                className="px-2.5 py-1 rounded-lg bg-[#faf8f5] hover:bg-[#f3eee5] text-slate-700 border border-[#e2dcd0] whitespace-nowrap text-xs transition flex items-center gap-1"
+                className="px-2.5 py-1 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs transition flex items-center gap-1 cursor-pointer"
               >
                 <span>{cat.icon}</span>
-                <span className="font-bengali">{cat.nameBn.split(' ')[0]}</span>
+                <span className="font-bengali">{cat.nameBn}</span>
               </button>
             ))}
           </div>
@@ -398,14 +398,14 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
           </h1>
 
           <p className="text-sm sm:text-base text-slate-600 font-bengali max-w-2xl mx-auto mb-8 leading-relaxed">
-            JLPT N5 পরীক্ষার জন্য প্রয়োজনীয় সম্পূর্ণ ৮৩৮টি জাপানি শব্দ, হিরাগানা-কাঞ্জি-রোমাজি লিখন, নির্ভুল বাংলা অর্থ, পদবিন্যাস ও বাস্তব ব্যবহারিক উদাহরণ বাক্যসহ।
+            JLPT N5 পরীক্ষার জন্য প্রয়োজনীয় সম্পূর্ণ ৭১৮টি জাপানি শব্দ, হিরাগানা-কাঞ্জি-রোমাজি লিখন, নির্ভুল বাংলা অর্থ, পদবিন্যাস ও বাস্তব ব্যবহারিক উদাহরণ বাক্যসহ।
           </p>
 
           {/* Key Book Stats Pill */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto mb-10 text-left">
             <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-xs">
               <span className="text-[11px] text-slate-500 font-bengali block">মোট শব্দভাণ্ডার</span>
-              <strong className="text-xl font-bold text-slate-900 font-mono">৮৩৮ টি</strong>
+              <strong className="text-xl font-bold text-slate-900 font-mono">৭১৮ টি</strong>
             </div>
             <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-xs">
               <span className="text-[11px] text-slate-500 font-bengali block">বিষয়ভিত্তিক অধ্যায়</span>
@@ -456,7 +456,7 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
                 <span>📑 সূচিপত্র (Table of Contents)</span>
               </h2>
               <span className="text-xs text-slate-500 font-mono">
-                24 Chapters • 838 Total Words
+                24 Chapters • 718 Total Words
               </span>
             </div>
 
@@ -829,24 +829,24 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
       {/* PDF DOWNLOAD OPTION MODAL */}
       {/* ========================================================================= */}
       {isDownloadModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="bg-white border border-[#e8e2d4] rounded-3xl max-w-md w-full p-6 shadow-xl relative text-left">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-xl relative text-left">
             <button
               onClick={() => setIsDownloadModalOpen(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-sm p-1"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-sm p-1 cursor-pointer"
             >
               ✕
             </button>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-[#f4f9ea] text-[#558b2f] border border-[#d6eab9] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center">
                 <Download className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 font-bengali">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white font-bengali">
                   PDF বই ডাউনলোড অপশন
                 </h3>
-                <p className="text-xs text-slate-500 font-bengali">
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-bengali">
                   আপনার পছন্দসই ফরম্যাটে PDF ফাইল ডাউনলোড করুন
                 </p>
               </div>
@@ -857,17 +857,17 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
               <button
                 id="btn-download-chapter-pdf"
                 onClick={() => handleStartPdfDownload('current')}
-                className="w-full p-3.5 rounded-2xl bg-[#faf8f5] hover:bg-[#f3eee5] border border-[#e8e2d4] text-left transition group cursor-pointer"
+                className="w-full p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-left transition group cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-1">
-                  <strong className="text-sm text-slate-900 group-hover:text-[#558b2f]">
+                  <strong className="text-sm text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
                     {selectedCategory === 'all' ? 'বর্তমান ভিউ PDF ডাউনলোড' : `${CATEGORIES.find(c => c.key === selectedCategory)?.nameBn} অধ্যায় PDF`}
                   </strong>
-                  <span className="text-[11px] px-2 py-0.5 rounded bg-[#f4f9ea] text-[#558b2f] font-mono border border-[#d6eab9]">
+                  <span className="text-[11px] px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-mono border border-indigo-200 dark:border-indigo-800">
                     দ্রুত (~২-৪ সেকেন্ড)
                   </span>
                 </div>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   নির্বাচিত ক্যাটাগরি ও ফিল্টার অনুসারে পরিষ্কার PDF ডাউনলোড
                 </p>
               </button>
@@ -876,18 +876,18 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
               <button
                 id="btn-download-full-book-pdf"
                 onClick={() => handleStartPdfDownload('all')}
-                className="w-full p-3.5 rounded-2xl bg-[#f4f9ea] hover:bg-[#e9f4d7] border border-[#cce4ab] text-left transition group cursor-pointer"
+                className="w-full p-3.5 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/40 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/80 text-left transition group cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-1">
-                  <strong className="text-sm text-[#3f6e1f] group-hover:text-[#2d5016] flex items-center gap-1.5 font-bold">
+                  <strong className="text-sm text-indigo-700 dark:text-indigo-300 group-hover:text-indigo-800 dark:group-hover:text-indigo-200 flex items-center gap-1.5 font-bold">
                     <Sparkles className="w-4 h-4 text-amber-500" />
                     সম্পূর্ণ বই PDF (৮৩৮টি শব্দ)
                   </strong>
-                  <span className="text-[11px] px-2 py-0.5 rounded bg-white text-[#558b2f] font-mono border border-[#cce4ab]">
+                  <span className="text-[11px] px-2 py-0.5 rounded bg-white dark:bg-indigo-900/60 text-indigo-600 dark:text-indigo-300 font-mono border border-indigo-200 dark:border-indigo-700">
                     পূর্ণাঙ্গ সংস্করণ
                   </span>
                 </div>
-                <p className="text-xs text-[#558b2f]">
+                <p className="text-xs text-indigo-600/80 dark:text-indigo-400">
                   কভার পাতা, সূচিপত্র, ২৪টি অধ্যায় এবং পরিশিষ্ট সহ সম্পূর্ণ বই
                 </p>
               </button>
@@ -899,18 +899,18 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
                   setIsDownloadModalOpen(false);
                   handlePrintToPdf();
                 }}
-                className="w-full p-3.5 rounded-2xl bg-[#faf8f5] hover:bg-[#f3eee5] border border-[#e8e2d4] text-left transition group cursor-pointer"
+                className="w-full p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-left transition group cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-1">
-                  <strong className="text-sm text-slate-900 group-hover:text-[#558b2f] flex items-center gap-1.5">
-                    <Printer className="w-4 h-4 text-[#558b2f]" />
+                  <strong className="text-sm text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 flex items-center gap-1.5">
+                    <Printer className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     ব্রাউজার প্রিন্ট / Save as PDF
                   </strong>
-                  <span className="text-[11px] px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono">
+                  <span className="text-[11px] px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 font-mono">
                     ১০০% ক্রিস্প ভেক্টর
                   </span>
                 </div>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   কম্পিউটার বা ফোনের প্রিন্ট মেন্যু দিয়ে ইনস্ট্যান্ট ভেক্টর PDF সেভ করুন
                 </p>
               </button>
@@ -919,7 +919,7 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
             <div className="text-right">
               <button
                 onClick={() => setIsDownloadModalOpen(false)}
-                className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bengali transition cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bengali transition cursor-pointer"
               >
                 বাতিল করুন
               </button>
@@ -933,18 +933,18 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
       {/* PDF GENERATION PROGRESS MODAL OVERLAY */}
       {/* ========================================================================= */}
       {isGeneratingPdf && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white border border-[#e8e2d4] rounded-3xl max-w-sm w-full p-6 text-center shadow-xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl max-w-sm w-full p-6 text-center shadow-xl">
             {pdfProgress?.status === 'error' ? (
               <>
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center mx-auto mb-4">
-                  <AlertCircle className="w-6 h-6 text-amber-600" />
+                <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800 flex items-center justify-center mx-auto mb-4">
+                  <AlertCircle className="w-6 h-6 text-amber-600 dark:text-amber-400" />
                 </div>
 
-                <h3 className="text-base font-bold text-slate-900 font-bengali mb-1">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white font-bengali mb-1">
                   পিডিএফ তৈরি করা সম্ভব হয়নি
                 </h3>
-                <p className="text-xs text-slate-500 font-bengali mb-5 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-bengali mb-5 leading-relaxed">
                   {pdfProgress?.message || 'ব্রাউজারের সীমাবদ্ধতার কারণে সরাসরি ডাউনলোড ব্যর্থ হয়েছে। আপনি ক্রিস্প ভেক্টর PDF সেভ করতে পারেন:'}
                 </p>
 
@@ -955,7 +955,7 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
                       setPdfProgress(null);
                       handlePrintToPdf();
                     }}
-                    className="w-full py-2.5 px-3 rounded-xl bg-[#558b2f] hover:bg-[#467326] text-white text-xs font-semibold flex items-center justify-center gap-2 transition shadow-xs"
+                    className="w-full py-2.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm cursor-pointer"
                   >
                     <Printer className="w-4 h-4" />
                     <span>Save as PDF (ব্রাউজার প্রিন্ট)</span>
@@ -967,9 +967,9 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
                       setPdfProgress(null);
                       handleDownloadOfflineBook();
                     }}
-                    className="w-full py-2.5 px-3 rounded-xl bg-[#faf8f5] hover:bg-[#f3eee5] text-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition border border-[#e8e2d4]"
+                    className="w-full py-2.5 px-3 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold flex items-center justify-center gap-2 transition border border-slate-200 dark:border-slate-700 cursor-pointer"
                   >
-                    <BookOpen className="w-4 h-4 text-[#558b2f]" />
+                    <BookOpen className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     <span>অফলাইন HTML বই ডাউনলোড</span>
                   </button>
                 </div>
@@ -979,28 +979,28 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
                     setIsGeneratingPdf(false);
                     setPdfProgress(null);
                   }}
-                  className="text-xs text-slate-400 hover:text-slate-600 transition"
+                  className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition cursor-pointer"
                 >
                   বাতিল করুন
                 </button>
               </>
             ) : (
               <>
-                <div className="w-12 h-12 rounded-2xl bg-[#f4f9ea] text-[#558b2f] border border-[#d6eab9] flex items-center justify-center mx-auto mb-4 animate-bounce">
+                <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center mx-auto mb-4 animate-bounce">
                   <Download className="w-6 h-6" />
                 </div>
 
-                <h3 className="text-base font-bold text-slate-900 font-bengali mb-1">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white font-bengali mb-1">
                   পিডিএফ তৈরি হচ্ছে...
                 </h3>
-                <p className="text-xs text-slate-500 font-bengali mb-4">
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-bengali mb-4">
                   {pdfProgress?.message || 'বইয়ের পৃষ্ঠাগুলো প্রস্তুত করা হচ্ছে...'}
                 </p>
 
                 {/* Progress bar */}
-                <div className="w-full bg-[#e8e2d4] h-2 rounded-full overflow-hidden mb-3">
+                <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden mb-3">
                   <div 
-                    className="bg-[#558b2f] h-full transition-all duration-300 rounded-full"
+                    className="bg-indigo-600 h-full transition-all duration-300 rounded-full"
                     style={{
                       width: `${
                         pdfProgress?.status === 'saving' || pdfProgress?.status === 'done'
@@ -1013,7 +1013,7 @@ export const PdfBookView: React.FC<PdfBookViewProps> = ({
                   />
                 </div>
 
-                <p className="text-[11px] font-mono text-slate-500">
+                <p className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
                   {pdfProgress?.current && pdfProgress?.total
                     ? `ধাপ ${pdfProgress.current} / ${pdfProgress.total}`
                     : 'অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন'}

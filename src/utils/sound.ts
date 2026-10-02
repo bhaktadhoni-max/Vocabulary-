@@ -346,6 +346,31 @@ export const playSuccessChime = () => {
   }
 };
 
+// Soft Encouraging Feedback for "Don't Know / Need Practice"
+export const playReviewSound = () => {
+  const settings = getVoiceSettings();
+  if (!settings.soundFxEnabled) return;
+
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(392, now); // G4
+    osc.frequency.exponentialRampToValueAtTime(329.63, now + 0.14); // E4
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.exponentialRampToValueAtTime(0.1, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.22);
+  } catch (e) {}
+};
+
 // Soft Low Non-jarring Feedback for Incorrect Quiz Answers
 export const playErrorSound = () => {
   const settings = getVoiceSettings();
@@ -371,7 +396,7 @@ export const playErrorSound = () => {
   } catch (e) {}
 };
 
-// Smooth Airy Card Flip Sound
+// Smooth Tactile Card Flip Sound with airy whoosh and crisp settle
 export const playCardFlipSound = () => {
   const settings = getVoiceSettings();
   if (!settings.soundFxEnabled) return;
@@ -381,18 +406,34 @@ export const playCardFlipSound = () => {
 
   try {
     const now = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(320, now);
-    osc.frequency.exponentialRampToValueAtTime(540, now + 0.08);
-    gain.gain.setValueAtTime(0.001, now);
-    gain.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.12);
+    
+    // Tone 1: Smooth airy rotational whoosh
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(280, now);
+    osc1.frequency.exponentialRampToValueAtTime(560, now + 0.09);
+    gain1.gain.setValueAtTime(0.001, now);
+    gain1.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
+    gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+    osc1.connect(gain1);
+    gain1.connect(ctx.destination);
+    osc1.start(now);
+    osc1.stop(now + 0.14);
+
+    // Tone 2: Crisp tactile mechanical settle
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    osc2.type = 'triangle';
+    osc2.frequency.setValueAtTime(460, now + 0.04);
+    osc2.frequency.exponentialRampToValueAtTime(320, now + 0.14);
+    gain2.gain.setValueAtTime(0.001, now + 0.04);
+    gain2.gain.exponentialRampToValueAtTime(0.05, now + 0.06);
+    gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.17);
+    osc2.connect(gain2);
+    gain2.connect(ctx.destination);
+    osc2.start(now + 0.04);
+    osc2.stop(now + 0.17);
   } catch (e) {}
 };
 
@@ -449,3 +490,19 @@ export const playBookmarkSound = () => {
     osc.stop(now + 0.28);
   } catch (e) {}
 };
+
+export const playAudioFX = (type: 'pop' | 'correct' | 'incorrect') => {
+  if (type === 'pop') playCardFlipSound();
+  else if (type === 'correct') playSuccessChime();
+  else if (type === 'incorrect') playErrorSound();
+};
+
+export const stopAllSpeech = () => {
+  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    try {
+      window.speechSynthesis.cancel();
+    } catch (e) {}
+  }
+};
+
+

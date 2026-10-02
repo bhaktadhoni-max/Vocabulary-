@@ -1,13 +1,77 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
+  :root {
+    /* Japanese Minimalist Light Theme: Warm Ivory & Sumi Ink Stationery */
+    --bg-page: #fbf9f5;
+    --bg-surface: #ffffff;
+    --bg-surface-subtle: #f5f2eb;
+    --bg-surface-elevated: #ffffff;
+    --border-hairline: #e8e3d8;
+    --border-subtle: #ded8cb;
+    --border-focus: #c23b22;
+    
+    /* Typography: Sumi ink hierarchy */
+    --text-primary: #191c21;
+    --text-secondary: #474b54;
+    --text-muted: #737885;
+    --text-faint: #9ea3b0;
+
+    /* Accents: Authentic Japanese Lacquer Crimson & Kintsugi Gold */
+    --accent-crimson: #c23b22;       /* 朱色 Shu-iro Vermilion */
+    --accent-crimson-hover: #ab301a;
+    --accent-crimson-subtle: rgba(194, 59, 34, 0.08);
+    --accent-gold: #c5a880;          /* 金箔 Kintsugi soft gold */
+    --accent-gold-hover: #b3956b;
+    --accent-gold-subtle: rgba(197, 168, 128, 0.12);
+
+    /* Shadows: Soft diffuse ambient paper lift */
+    --shadow-card: 0 2px 12px -2px rgba(25, 28, 33, 0.05), 0 1px 3px rgba(25, 28, 33, 0.04);
+    --shadow-card-elevated: 0 16px 36px -8px rgba(25, 28, 33, 0.08), 0 2px 6px rgba(25, 28, 33, 0.04);
+  }
+
+  .dark {
+    /* Japanese Modernist Dark Theme: Deep Sumi Charcoal & Tokyo Night */
+    --bg-page: #0d0f14;              /* Deep charcoal / near black */
+    --bg-surface: #141720;           /* Clean card surface */
+    --bg-surface-subtle: #1a1e2a;    /* Slightly lifted surface */
+    --bg-surface-elevated: #1e2332;  /* Elevated modal / float surface */
+    --border-hairline: #222735;
+    --border-subtle: #2d3445;
+    --border-focus: #e0452d;
+
+    /* Typography: Soft white to cool slate */
+    --text-primary: #f6f8fb;
+    --text-secondary: #cbd3e1;
+    --text-muted: #8d97ab;
+    --text-faint: #5d677d;
+
+    /* Accents: Luminous Crimson & Warm Brass Gold */
+    --accent-crimson: #e0452d;
+    --accent-crimson-hover: #f0523a;
+    --accent-crimson-subtle: rgba(224, 69, 45, 0.12);
+    --accent-gold: #d4af37;
+    --accent-gold-hover: #e0be4d;
+    --accent-gold-subtle: rgba(212, 175, 55, 0.14);
+
+    /* Shadows: Deep obsidian glow */
+    --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-card-elevated: 0 20px 48px -10px rgba(0, 0, 0, 0.65), 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
   body {
     font-family: 'Plus Jakarta Sans', 'Noto Sans Bengali', 'Hind Siliguri', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
-    background-color: #fbf8f2;
-    color: #1f2937;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    transition: background-color 0.25s ease, color 0.25s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 }
 
+/* Typography Helpers */
 .font-bengali,
 .font-bn {
   font-family: 'Noto Sans Bengali', 'Hind Siliguri', system-ui, sans-serif;
@@ -18,8 +82,21 @@
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif;
 }
 
+.font-mincho {
+  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* 3D Flip Card Utilities & Smooth Physics */
-.perspective-1000 {
+.perspective-1200 {
   perspective: 1200px;
   -webkit-perspective: 1200px;
 }
@@ -34,60 +111,106 @@
   -webkit-backface-visibility: hidden;
 }
 
-.rotate-y-180 {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
+/* Subtle Layered Japanese Background: Soft Radial Vignette + Subtle Seigaiha / Dot Geometry */
+.jp-layered-bg {
+  background-color: var(--bg-page);
+  background-image: 
+    radial-gradient(circle at 12% 10%, rgba(194, 59, 34, 0.032) 0%, transparent 42%),
+    radial-gradient(circle at 88% 14%, rgba(197, 168, 128, 0.04) 0%, transparent 48%),
+    radial-gradient(circle at 50% 90%, rgba(194, 59, 34, 0.02) 0%, transparent 50%),
+    radial-gradient(rgba(25, 28, 33, 0.035) 1px, transparent 0);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px;
 }
 
-/* Smooth Spring & Fluid Ease for Card Flip */
-.flip-card-inner {
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  will-change: transform;
+.dark .jp-layered-bg {
+  background-color: var(--bg-page);
+  background-image: 
+    radial-gradient(circle at 12% 8%, rgba(224, 69, 45, 0.075) 0%, transparent 45%),
+    radial-gradient(circle at 88% 12%, rgba(212, 175, 55, 0.065) 0%, transparent 48%),
+    radial-gradient(circle at 50% 92%, rgba(224, 69, 45, 0.04) 0%, transparent 50%),
+    radial-gradient(rgba(246, 248, 251, 0.035) 1px, transparent 0);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px;
 }
 
-/* Smooth Gradient Shimmer Keyframes */
-@keyframes gradientShimmer {
-  0% {
-    background-position: 0% 50%;
+/* Washi Paper Stationery Surface Texture */
+.washi-paper {
+  background-color: var(--bg-surface);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-hairline);
+}
+
+.washi-paper-elevated {
+  background-color: var(--bg-surface-elevated);
+  box-shadow: var(--shadow-card-elevated);
+  border: 1px solid var(--border-hairline);
+}
+
+/* Audio Wave Pulse Animation */
+@keyframes audioWave {
+  0%, 100% {
+    height: 6px;
+    opacity: 0.6;
   }
   50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+    height: 18px;
+    opacity: 1;
   }
 }
 
-.animate-gradient-slow {
-  background-size: 200% 200%;
-  animation: gradientShimmer 8s ease infinite;
+.animate-wave-1 {
+  animation: audioWave 0.85s ease-in-out infinite;
 }
 
-.animate-gradient-fast {
-  background-size: 200% 200%;
-  animation: gradientShimmer 4s ease infinite;
+.animate-wave-2 {
+  animation: audioWave 0.85s ease-in-out 0.18s infinite;
+}
+
+.animate-wave-3 {
+  animation: audioWave 0.85s ease-in-out 0.36s infinite;
+}
+
+/* Smooth Fade In */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeInScale {
+  animation: fadeInScale 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Custom clean soft scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #fbf8f2;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d6cfc0;
+  background: #dcd7ca;
   border-radius: 9999px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #2a3142;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #b5ac9d;
+  background: #c7c0b0;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3b445b;
 }
 
 /* Print Styles for Downloadable PDF Book & Print-to-PDF */
@@ -105,7 +228,6 @@
     print-color-adjust: exact !important;
   }
 
-  /* Hide interactive web UI */
   header,
   footer,
   nav,
@@ -115,7 +237,6 @@
     display: none !important;
   }
 
-  /* Make sure background ambient glows do not print */
   .fixed {
     display: none !important;
   }
@@ -161,4 +282,3 @@
     break-after: page !important;
   }
 }
-

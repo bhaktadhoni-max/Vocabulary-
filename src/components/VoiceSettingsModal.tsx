@@ -3,7 +3,6 @@ import {
   X, 
   Volume2, 
   Sparkles, 
-  Sliders, 
   Play, 
   Check, 
   RotateCcw,
@@ -112,53 +111,53 @@ export const VoiceSettingsModal: React.FC<VoiceSettingsModalProps> = ({
   return (
     <div 
       id="voice-settings-modal"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div 
-        className="bg-white w-full max-w-xl rounded-3xl shadow-xl border border-[#e8e2d4] overflow-hidden flex flex-col max-h-[92vh] animate-in zoom-in-95 duration-200"
+        className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 w-full max-w-lg rounded-3xl shadow-xl border border-slate-200/80 dark:border-slate-800 overflow-hidden flex flex-col max-h-[92vh] animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Modal Header */}
-        <div className="p-5 sm:p-6 border-b border-[#e8e2d4] flex items-center justify-between bg-[#faf8f5]">
+        <div className="p-5 border-b border-slate-200/80 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-850">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-[#f4f9ea] text-[#558b2f] border border-[#d6eab9]">
+            <div className="p-2.5 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-900/60">
               <Volume2 className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-900 text-lg font-bengali flex items-center gap-2">
-                <span>দ্বিভাষিক অডিও ও ভয়েস সেটিংস</span>
-                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-md bg-[#f4f9ea] text-[#558b2f] border border-[#d6eab9]">
-                  JP & BN TTS
+              <h3 className="font-bold text-slate-900 dark:text-white text-base sm:text-lg font-bengali flex items-center gap-2">
+                <span>দ্বিভাষিক অডিও সেটিংস</span>
+                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
+                  JP & BN
                 </span>
               </h3>
-              <p className="text-xs text-slate-500 font-bengali">
-                জাপানি শব্দ এবং বাংলা অর্থ উচ্চারণের স্পষ্টতা ও গতি নিয়ন্ত্রণ
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-bengali">
+                জাপানি ও বাংলা উচ্চারণের গতি ও স্পষ্টতা নিয়ন্ত্রণ
               </p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-400 hover:text-slate-700 border border-[#e8e2d4] transition"
+            className="p-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 border border-slate-200 dark:border-slate-700 transition cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="p-5 sm:p-6 overflow-y-auto space-y-5">
+        <div className="p-5 overflow-y-auto space-y-4">
           
           {/* 1. Japanese Voice Engine */}
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold font-bengali text-slate-800 flex items-center gap-1.5">
-                <Mic className="w-4 h-4 text-[#558b2f]" />
+              <label className="text-xs font-bold font-bengali text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                <Mic className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                 <span>জাপানি ভয়েস ইঞ্জিন (Japanese Voice):</span>
               </label>
-              <span className="text-[11px] font-mono text-[#558b2f]">
-                {japaneseVoices.length > 0 ? `${japaneseVoices.length} টি ভয়েস সনাক্ত` : 'অটো ডিটেক্ট'}
+              <span className="text-[10px] font-mono text-indigo-600 dark:text-indigo-400">
+                {japaneseVoices.length > 0 ? `${japaneseVoices.length} টি সনাক্ত` : 'অটো'}
               </span>
             </div>
 
@@ -166,60 +165,28 @@ export const VoiceSettingsModal: React.FC<VoiceSettingsModalProps> = ({
               id="select-japanese-voice"
               value={settings.voiceURI || ''}
               onChange={(e) => handleUpdate({ voiceURI: e.target.value || null })}
-              className="w-full bg-[#faf8f5] border border-[#e2dcd0] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-medium text-slate-800 focus:outline-none focus:border-[#558b2f] focus:ring-1 focus:ring-[#558b2f] cursor-pointer"
+              className="w-full bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-600 cursor-pointer"
             >
-              <option value="">স্বয়ংক্রিয় সেরা ন্যাচারাল ভয়েস (Auto-Recommended)</option>
+              <option value="">স্বয়ংক্রিয় সেরা ন্যাচারাল ভয়েস (Auto Recommended)</option>
               {japaneseVoices.map((voice) => {
                 const isNatural = voice.name.toLowerCase().includes('natural') || voice.name.toLowerCase().includes('google') || voice.name.toLowerCase().includes('kyoko');
                 return (
                   <option key={voice.voiceURI} value={voice.voiceURI}>
-                    {voice.name} ({voice.lang}) {isNatural ? '✨ [Natural HD]' : ''}
+                    {voice.name} ({voice.lang}) {isNatural ? '✨ [HD]' : ''}
                   </option>
                 );
               })}
             </select>
           </div>
 
-          {/* 2. Bengali Voice Engine */}
-          <div className="space-y-2">
+          {/* 2. Speed (Rate) Controls */}
+          <div className="space-y-2.5 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold font-bengali text-slate-800 flex items-center gap-1.5">
-                <Languages className="w-4 h-4 text-[#558b2f]" />
-                <span>বাংলা ভয়েস ইঞ্জিন (Bengali Voice):</span>
-              </label>
-              <span className="text-[11px] font-mono text-[#558b2f]">
-                {bengaliVoices.length > 0 ? `${bengaliVoices.length} টি ভয়েস সনাক্ত` : 'বাংলা ডিটেক্ট'}
-              </span>
-            </div>
-
-            <select
-              id="select-bengali-voice"
-              value={settings.bengaliVoiceURI || ''}
-              onChange={(e) => handleUpdate({ bengaliVoiceURI: e.target.value || null })}
-              className="w-full bg-[#faf8f5] border border-[#e2dcd0] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-medium text-slate-800 focus:outline-none focus:border-[#558b2f] focus:ring-1 focus:ring-[#558b2f] cursor-pointer"
-            >
-              <option value="">স্বয়ংক্রিয় বাংলা ন্যাচারাল ভয়েস (Auto Bengali)</option>
-              {bengaliVoices.map((voice) => {
-                return (
-                  <option key={voice.voiceURI} value={voice.voiceURI}>
-                    {voice.name} ({voice.lang})
-                  </option>
-                );
-              })}
-            </select>
-            <p className="text-[11px] text-slate-500 font-bengali">
-              * ফ্লিপকার্ডের সামনের অংশে চাপলে জাপানি শব্দ শোনাবে এবং উল্টো অংশে বাংলা অর্থ শোনাবে।
-            </p>
-          </div>
-
-          {/* 3. Speed (Rate) Controls with Presets */}
-          <div className="space-y-3 p-4 rounded-2xl bg-[#faf8f5] border border-[#e8e2d4]">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-bold font-bengali text-slate-800 flex items-center gap-1.5">
-                <Gauge className="w-4 h-4 text-[#558b2f]" />
+              <label className="text-xs font-bold font-bengali text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                <Gauge className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                 <span>উচ্চারণের গতি (Playback Speed):</span>
               </label>
-              <span className="text-xs font-mono font-bold text-[#558b2f] bg-[#f4f9ea] px-2 py-0.5 rounded border border-[#d6eab9]">
+              <span className="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-200 dark:border-indigo-800">
                 {settings.rate.toFixed(2)}x
               </span>
             </div>
@@ -229,44 +196,43 @@ export const VoiceSettingsModal: React.FC<VoiceSettingsModalProps> = ({
               <button
                 type="button"
                 onClick={() => handleUpdate({ rate: 0.65 })}
-                className={`py-2 px-2.5 rounded-xl border text-xs font-bengali transition flex flex-col items-center gap-0.5 ${
+                className={`py-2 px-2 rounded-xl border text-xs font-bengali transition flex flex-col items-center gap-0.5 cursor-pointer ${
                   Math.abs(settings.rate - 0.65) < 0.05
-                    ? 'bg-[#f4f9ea] border-[#558b2f] text-slate-900 shadow-2xs font-bold'
-                    : 'bg-white text-slate-600 border-[#e2dcd0] hover:bg-slate-50'
+                    ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-slate-900 dark:text-white font-bold'
+                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                 }`}
               >
-                <span className="font-bold flex items-center gap-1">🐢 ০.৬৫x</span>
-                <span className="text-[10px] text-slate-500">ধীর ও স্পষ্ট</span>
+                <span className="font-bold">🐢 ০.৬৫x</span>
+                <span className="text-[10px] text-slate-400">ধীর</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleUpdate({ rate: 0.85 })}
-                className={`py-2 px-2.5 rounded-xl border text-xs font-bengali transition flex flex-col items-center gap-0.5 ${
+                className={`py-2 px-2 rounded-xl border text-xs font-bengali transition flex flex-col items-center gap-0.5 cursor-pointer ${
                   Math.abs(settings.rate - 0.85) < 0.05
-                    ? 'bg-[#f4f9ea] border-[#558b2f] text-slate-900 shadow-2xs font-bold'
-                    : 'bg-white text-slate-600 border-[#e2dcd0] hover:bg-slate-50'
+                    ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-slate-900 dark:text-white font-bold'
+                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                 }`}
               >
-                <span className="font-bold flex items-center gap-1">🎧 ০.৮৫x</span>
-                <span className="text-[10px] text-[#558b2f] font-semibold">মসৃণ (সেরা)</span>
+                <span className="font-bold">🎧 ০.৮৫x</span>
+                <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold">আদর্শ</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleUpdate({ rate: 1.0 })}
-                className={`py-2 px-2.5 rounded-xl border text-xs font-bengali transition flex flex-col items-center gap-0.5 ${
+                className={`py-2 px-2 rounded-xl border text-xs font-bengali transition flex flex-col items-center gap-0.5 cursor-pointer ${
                   Math.abs(settings.rate - 1.0) < 0.05
-                    ? 'bg-[#f4f9ea] border-[#558b2f] text-slate-900 shadow-2xs font-bold'
-                    : 'bg-white text-slate-600 border-[#e2dcd0] hover:bg-slate-50'
+                    ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-500 text-slate-900 dark:text-white font-bold'
+                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                 }`}
               >
-                <span className="font-bold flex items-center gap-1">⚡ ১.০০x</span>
-                <span className="text-[10px] text-slate-500">নেটিভ স্পিড</span>
+                <span className="font-bold">⚡ ১.০০x</span>
+                <span className="text-[10px] text-slate-400">স্বাভাবিক</span>
               </button>
             </div>
 
-            {/* Fine slider */}
             <input
               id="slider-voice-rate"
               type="range"
@@ -275,159 +241,87 @@ export const VoiceSettingsModal: React.FC<VoiceSettingsModalProps> = ({
               step="0.05"
               value={settings.rate}
               onChange={(e) => handleUpdate({ rate: parseFloat(e.target.value) })}
-              className="w-full h-1.5 bg-[#e8e2d4] rounded-lg appearance-none cursor-pointer accent-[#558b2f]"
+              className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-600"
             />
           </div>
 
-          {/* 4. Pitch & Volume Controls */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {/* Pitch */}
-            <div className="p-3.5 rounded-2xl bg-[#faf8f5] border border-[#e8e2d4] space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-bold font-bengali text-slate-800 flex items-center gap-1">
-                  <Activity className="w-3.5 h-3.5 text-[#558b2f]" />
-                  স্বরের তীক্ষ্ণতা (Pitch)
-                </span>
-                <span className="font-mono text-[#558b2f]">{settings.pitch.toFixed(1)}</span>
-              </div>
-              <input
-                id="slider-voice-pitch"
-                type="range"
-                min="0.8"
-                max="1.2"
-                step="0.05"
-                value={settings.pitch}
-                onChange={(e) => handleUpdate({ pitch: parseFloat(e.target.value) })}
-                className="w-full h-1.5 bg-[#e8e2d4] rounded-lg appearance-none cursor-pointer accent-[#558b2f]"
-              />
-            </div>
-
-            {/* Volume */}
-            <div className="p-3.5 rounded-2xl bg-[#faf8f5] border border-[#e8e2d4] space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-bold font-bengali text-slate-800 flex items-center gap-1">
-                  <Volume2 className="w-3.5 h-3.5 text-[#558b2f]" />
-                  ভলিউম (Volume)
-                </span>
-                <span className="font-mono text-[#558b2f]">{Math.round(settings.volume * 100)}%</span>
-              </div>
-              <input
-                id="slider-voice-volume"
-                type="range"
-                min="0.2"
-                max="1.0"
-                step="0.05"
-                value={settings.volume}
-                onChange={(e) => handleUpdate({ volume: parseFloat(e.target.value) })}
-                className="w-full h-1.5 bg-[#e8e2d4] rounded-lg appearance-none cursor-pointer accent-[#558b2f]"
-              />
-            </div>
-          </div>
-
-          {/* 5. Interactive Test Phrase Player */}
-          <div className="p-4 rounded-2xl bg-[#faf8f5] border border-[#e8e2d4] space-y-3">
+          {/* 3. Interactive Test Phrase Player */}
+          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 space-y-2.5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold font-bengali text-[#558b2f] flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4" />
-                ভয়েস টেস্ট প্লেয়ার (Live Test Pronunciation):
+              <span className="text-xs font-bold font-bengali text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" />
+                লাইভ টেস্ট প্লেয়ার:
               </span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <button
                   type="button"
                   onClick={() => handleTestJapanese()}
                   disabled={isPlayingSample !== null}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#558b2f] hover:bg-[#467326] text-white font-bold text-xs shadow-2xs active:scale-95 transition"
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs cursor-pointer shadow-sm transition"
                 >
                   <Play className={`w-3 h-3 ${isPlayingSample === 'ja' ? 'animate-spin' : ''}`} />
-                  <span>জাপানি টেস্ট</span>
+                  <span>জাপানি</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => handleTestBangla()}
                   disabled={isPlayingSample !== null}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs shadow-2xs active:scale-95 transition"
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 text-white font-bold text-xs cursor-pointer shadow-sm transition"
                 >
                   <Play className={`w-3 h-3 ${isPlayingSample === 'bn' ? 'animate-spin' : ''}`} />
-                  <span>বাংলা টেস্ট</span>
+                  <span>বাংলা</span>
                 </button>
               </div>
             </div>
 
-            {/* Sample Selector */}
-            <div className="space-y-1.5">
-              {SAMPLE_PHRASES.map((sample, idx) => (
+            <div className="space-y-1">
+              {SAMPLE_PHRASES.slice(0, 2).map((sample, idx) => (
                 <div
                   key={idx}
-                  onClick={() => {
-                    setSelectedSampleIdx(idx);
-                  }}
-                  className={`p-2.5 rounded-xl border cursor-pointer transition flex items-center justify-between text-xs ${
+                  onClick={() => setSelectedSampleIdx(idx)}
+                  className={`p-2 rounded-xl border cursor-pointer transition flex items-center justify-between text-xs ${
                     selectedSampleIdx === idx
-                      ? 'bg-[#f4f9ea] border-[#558b2f] text-slate-900'
-                      : 'bg-white border-[#e2dcd0] text-slate-700 hover:bg-[#faf7f0]'
+                      ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-400 text-slate-900 dark:text-white'
+                      : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'
                   }`}
                 >
                   <div className="space-y-0.5">
-                    <p className="font-japanese font-medium text-slate-900">{sample.jp}</p>
-                    <p className="font-bengali text-[11px] text-slate-500">{sample.bn}</p>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleTestJapanese(sample.jp);
-                      }}
-                      className="px-2 py-0.5 rounded bg-[#f4f9ea] hover:bg-[#e9f4d7] text-[10px] text-[#558b2f] border border-[#d6eab9]"
-                    >
-                      JP
-                    </button>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleTestBangla(sample.bn);
-                      }}
-                      className="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-[10px] text-slate-700 border border-slate-200"
-                    >
-                      BN
-                    </button>
+                    <p className="font-japanese font-medium">{sample.jp}</p>
+                    <p className="font-bengali text-[11px] text-slate-400">{sample.bn}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* 6. Audio Toggle Options */}
-          <div className="space-y-2 pt-2 border-t border-[#e8e2d4]">
-            {/* Auto Speak on Flip */}
-            <label className="flex items-center justify-between p-3 rounded-xl bg-[#faf8f5] border border-[#e8e2d4] hover:bg-[#f5f0e6] cursor-pointer transition">
+          {/* 4. Audio Toggles */}
+          <div className="space-y-2 pt-1 border-t border-slate-200 dark:border-slate-800">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 cursor-pointer">
               <div className="space-y-0.5">
-                <span className="text-xs font-bold font-bengali text-slate-800 flex items-center gap-1.5">
+                <span className="text-xs font-bold font-bengali text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 text-amber-500" />
-                  কার্ড উল্টালে স্বয়ংক্রিয় উচ্চারণ (Auto-Speak on Card Flip)
+                  কার্ড উল্টালে স্বয়ংক্রিয় উচ্চারণ (Auto-Speak)
                 </span>
-                <p className="text-[11px] text-slate-500 font-bengali">
-                  সামনের অংশে জাপানি এবং উল্টালে বাংলা অর্থ স্বয়ংক্রিয়ভাবে পড়ে শোনাবে
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-bengali">
+                  ফ্লিপ করার সাথে সাথে স্বয়ংক্রিয়ভাবে পড়ে শোনাবে
                 </p>
               </div>
               <input
                 type="checkbox"
                 checked={settings.autoSpeakOnFlip}
                 onChange={(e) => handleUpdate({ autoSpeakOnFlip: e.target.checked })}
-                className="w-5 h-5 rounded bg-white border-slate-300 text-[#558b2f] focus:ring-[#558b2f] cursor-pointer"
+                className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer"
               />
             </label>
 
-            {/* Sound FX */}
-            <label className="flex items-center justify-between p-3 rounded-xl bg-[#faf8f5] border border-[#e8e2d4] hover:bg-[#f5f0e6] cursor-pointer transition">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 cursor-pointer">
               <div className="space-y-0.5">
-                <span className="text-xs font-bold font-bengali text-slate-800 flex items-center gap-1.5">
-                  <Music className="w-3.5 h-3.5 text-[#558b2f]" />
-                  অ্যাপ সাউন্ড ইফেক্টস (Crisp Action Chimes)
+                <span className="text-xs font-bold font-bengali text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                  <Music className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                  অ্যাপ সাউন্ড ইফেক্টস (Action Chimes)
                 </span>
-                <p className="text-[11px] text-slate-500 font-bengali">
-                  কুইজের সঠিক উত্তর ও ফ্লিপকার্ডে মার্জিত সাউন্ড সংকেত
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-bengali">
+                  সঠিক উত্তর ও বাটনের মার্জিত সাউন্ড সংকেত
                 </p>
               </div>
               <input
@@ -437,7 +331,7 @@ export const VoiceSettingsModal: React.FC<VoiceSettingsModalProps> = ({
                   handleUpdate({ soundFxEnabled: e.target.checked });
                   if (e.target.checked) playSuccessChime();
                 }}
-                className="w-5 h-5 rounded bg-white border-slate-300 text-[#558b2f] focus:ring-[#558b2f] cursor-pointer"
+                className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer"
               />
             </label>
           </div>
@@ -445,22 +339,22 @@ export const VoiceSettingsModal: React.FC<VoiceSettingsModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 sm:p-5 border-t border-[#e8e2d4] bg-[#faf8f5] flex items-center justify-between">
+        <div className="p-4 border-t border-slate-200/80 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 flex items-center justify-between">
           <button
             type="button"
             onClick={handleResetDefaults}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-50 border border-[#e2dcd0] transition"
+            className="flex items-center gap-1 min-h-[38px] px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 transition cursor-pointer"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>ডিফল্ট সেটিংস</span>
+            <RotateCcw className="w-3 h-3" />
+            <span>ডিফল্ট</span>
           </button>
 
           <button
             type="button"
             onClick={onClose}
-            className="px-6 py-2.5 rounded-xl bg-[#558b2f] hover:bg-[#467326] text-white text-xs font-bold font-bengali transition shadow-xs flex items-center gap-1.5"
+            className="min-h-[38px] px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold font-bengali transition shadow-sm flex items-center gap-1.5 cursor-pointer"
           >
-            <Check className="w-4 h-4" />
+            <Check className="w-3.5 h-3.5" />
             <span>সংরক্ষণ করুন</span>
           </button>
         </div>
